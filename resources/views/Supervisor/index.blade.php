@@ -118,7 +118,7 @@
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
 
 
-         var qw = '<table id="Supervisores" class="table display responsive nowrap table-bordered table-striped" style="width:100%">';  
+         var qw = '<table id="Supervisores" class="table display responsive table-bordered table-striped" style="width:100%">';  
       
         cursor_wait();
         $.get("{{asset('')}}supervisor/consultar").then((data)=> {
