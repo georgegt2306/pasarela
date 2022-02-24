@@ -7,6 +7,9 @@ use DB;
 use Hash;
 use App\Models\User;
 use Validator;
+use Crypt;
+use Input;
+
 
 class SupervisorController extends Controller
 {
@@ -15,12 +18,14 @@ class SupervisorController extends Controller
    }
 
    public function consulta_data(){
+
       $result=User::where('id_tipo','2')
             ->whereNull('deleted_at')
             ->orderBy('id')
             ->get();
 
-         $jsonenv=[];
+      $jsonenv=[];
+      
         foreach ($result as $res) {
    
          $boton_up=' <button  title="editar" class="btn btn-success" name="editar" onclick="mostrarmodal('.$res->id.');"><i class="fa fa-edit"></i> </button>';
@@ -40,13 +45,21 @@ class SupervisorController extends Controller
    public function store(Request $request){
       $userid = \Auth::id();
 
-      $validator=User::where([['email','=',$request->email_sup],['id_tipo','=','2']])
-      ->whereNull('deleted_at')
-      ->count();
-
-      if($validator==1){
-         return response()->json(["sms"=>false,"mensaje"=>"Email ya existe"]);
+      $v = Validator::make($request->all(),[
+        'email'=>"required|unique:user,email",
+      ]);
+      if($v->fails()){
+         $mensajedereturn=strtoupper($v->errors()->first('email'));
+         return response()->json(["sms"=>false ,"mensaje" => $mensajedereturn]);     
       }
+      // $validator=User::where([['email','=',$request->email_sup],['id_tipo','=','2']])
+      //    ->whereNull('deleted_at')
+      //    ->count();
+
+      // if($validator==1){
+      //    return response()->json(["sms"=>false,"mensaje"=>"Email ya existe"]);
+      // }
+
       try {
          DB::beginTransaction();
          User::create([
@@ -54,7 +67,7 @@ class SupervisorController extends Controller
             'ci_ruc' => $request->ci_ruc,
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
-            'email' => $request->email_sup,
+            'email' => $request->email,
             'password' => Hash::make($request->contra),
             'direccion' => $request->direccion,
             'user_updated' => $userid,
@@ -71,6 +84,50 @@ class SupervisorController extends Controller
 
    public function edit($id){
       $result_edit=User::where('id',$id)->first();
-      return view('Supervisor.edit', compact('result_edit'));
+
+      return view('Supervisor.edit', compact('result_edit','id'));
+   }
+
+   public function update($id){
+      $userid = \Auth::id();
+
+      try {
+         DB::beginTransaction();
+            User::where('id', $id)->update([
+               'ci_ruc' => Input::get('ci_ruc_edit'),
+               'nombre' => Input::get('nombre_edit'),
+               'apellido' => Input::get('apellido_edit'),
+               'direccion' => Input::get('direccion_edit'),
+               'user_updated' => $userid
+            ]);
+         DB::commit();
+         return response()->json(["sms"=>true, "mensaje"=>"Se edito correctamente"]);
+      }catch(\Exception $e){
+         DB::rollBack();
+         return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);           
+      }
+     
+   }
+   public function destroy($id){
+      $userid = \Auth::id();
+      try 
+          {
+          DB::beginTransaction();
+
+            User::where('id', $id)->update([
+               'updated_at' =>now(),
+               'deleted_at' =>now(),
+               'user_updated' => $userid
+            ]);
+
+       DB::commit();
+        
+        return response()->json(["sms"=>true,"mensaje"=>"Se elimino correctamente"]);
+
+      }catch(\Exception $e) 
+      {
+        DB::rollBack();
+        return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+      }
    }
 }

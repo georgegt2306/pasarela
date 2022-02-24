@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-ligth-primary elevation-4" style="background-color: white">
     <!-- Brand Logo -->
     <a href="{{ asset('/home')}}" class="brand-link" >
-      <img src="{{ asset('/dist/img/LOGO2.png')}}"  width="50" height="40" >
+      <img src="{{ asset('/dist/img/LOGO.png')}}"  width="50" height="40" >
       <span class="brand-text font-weight-dark" style="font-family:'Roboto';color: #012D3A;font-weight: bold;">&nbsp Pasarela Mercy</span>
     </a>
 

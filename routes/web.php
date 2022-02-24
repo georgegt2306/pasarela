@@ -34,7 +34,10 @@ Route::get('/recuperar',function(){
 Route::get('/register', 'LoginController@registration');
 Route::post('/registerform', 'LoginController@customRegistration');
 Route::resource('/supervisor','SupervisorController')->except('show')->middleware('auth.admin');
-Route::get('supervisor/consultar','SupervisorController@consulta_data');
+Route::get('supervisor/consultar','SupervisorController@consulta_data')->middleware('auth.admin');
+
+Route::resource('/local','LocalController')->except('show')->middleware('auth.admin');
+Route::get('local/consultar','LocalController@consulta_data')->middleware('auth.admin');
 
 
 
