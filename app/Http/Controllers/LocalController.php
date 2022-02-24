@@ -20,9 +20,20 @@ class LocalController extends Controller
             ->whereNull('local.deleted_at')
             ->orderBy('local.id')
             ->get();
+      $titulos = [];
+      $titulos[] = array('title' => '');
+      $titulos[] = array('title' => 'Acciones');
+      $titulos[] = array('title' => 'Dueño');
+      $titulos[] = array('title' => 'Ruc');
+      $titulos[] = array('title' => 'Nombre');
+      $titulos[] = array('title' => 'Telefono');
+      $titulos[] = array('title' => 'Direccion');
+      $titulos[] = array('title' => 'Coordenadas');
 
 
-        
+     
+
+
       $jsonenv=[];
       
         foreach ($result as $res) {
@@ -43,6 +54,6 @@ class LocalController extends Controller
           array_push($jsonenv, $jsonenvtemp);
         }
 
-       return response()->json(["sms"=> $jsonenv]);   
+       return response()->json(["sms"=> $jsonenv, "titulos"=>$titulos]);   
    }
 }

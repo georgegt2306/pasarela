@@ -22,6 +22,17 @@ class SupervisorController extends Controller
             ->whereNull('deleted_at')
             ->orderBy('id')
             ->get();
+      
+
+      $titulos = [];
+      $titulos[] = array('title' => '');
+      $titulos[] = array('title' => 'Acciones');
+      $titulos[] = array('title' => 'CI');
+      $titulos[] = array('title' => 'Nombre');
+      $titulos[] = array('title' => 'Apellido');
+      $titulos[] = array('title' => 'Email');
+      $titulos[] = array('title' => 'Dirección');
+
 
       $jsonenv=[];
       
@@ -33,12 +44,14 @@ class SupervisorController extends Controller
    
          $button= $boton_up.''.$boton_elim;
 
-         $jsonenvtemp = ['',$button,$res->ci_ruc,$res->nombre,$res->apellido,$res->email,$res->direccion];
+         $imagen='<img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/man5-512.png" width="30" heigth="30"  >';
+
+         $jsonenvtemp = [$imagen,$button,$res->ci_ruc,$res->nombre,$res->apellido,$res->email,$res->direccion];
 
           array_push($jsonenv, $jsonenvtemp);
         }
 
-       return response()->json(["sms"=> $jsonenv]);   
+       return response()->json(["sms"=> $jsonenv, "titulos"=>$titulos]);   
    }
 
    public function store(Request $request){

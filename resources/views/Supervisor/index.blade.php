@@ -17,19 +17,8 @@
                 
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
                  
-                        <table id="Supervisores" class="table display responsive table-bordered table-striped" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th></th>
-                              <th>Accciones</th>
-                              <th>Cedula</th>
-                              <th>Nombre</th>
-                              <th>Apellido</th>
-                              <th>Email</th>
-                              <th>Direccion</th>
-              
-                            </tr>
-                          </thead>
+                        <table id="Supervisores" class="table display responsive nowrap table-bordered table-striped" style="width:100%">
+
                       </table>
                  
                
@@ -121,35 +110,33 @@
   @section('script')
   <script type="text/javascript">
 
-    var table_sup = $("#Supervisores").DataTable({
-        "lengthMenu": [[ 100,50,20], [100,50,20]],
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ Registros",
-            "zeroRecords": "No hay registros...",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtrados de _MAX_ registros totales)",
-            "search": "Buscar:",
-            "select": {
-                "rows": ""
-            },
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Sigue",
-                "previous": "Previo"
-            },
-        },
-        select: true,
-        "responsive": true
-    });
-
     function consultar_tabla(){  
         cursor_wait();
         $.get("{{asset('')}}supervisor/consultar").then((data)=> {
-                     table_sup.clear().draw();
-                     table_sup.rows.add(data.sms);
-                     table_sup.columns.adjust().draw();
+            var table_sup = $("#Supervisores").DataTable({
+                "lengthMenu": [[ 100,50,20], [100,50,20]],
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ Registros",
+                    "zeroRecords": "No hay registros...",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrados de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "select": {
+                        "rows": ""
+                    },
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Sigue",
+                        "previous": "Previo"
+                    },
+                },
+                select: true,
+                "responsive": true,
+                columns:data.titulos,
+                data:data.sms
+            });
                      remove_cursor_wait();
         });
       }

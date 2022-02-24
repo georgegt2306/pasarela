@@ -17,20 +17,8 @@
                 
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
                  
-                        <table id="Local" class="table display responsive table-bordered table-striped" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th style="width:5px !important"></th>
-                              <th>Accciones</th>
-                              <th>Dueño</th>
-                              <th>Ruc</th>
-                              <th>Nombre</th>
-                              <th>Teléfono</th>
-                              <th>Dirección</th>
-                              <th>Coordenadas</th>
-                              
-                            </tr>
-                          </thead>
+                        <table id="Local" class="table display responsive nowrap table-bordered table-striped" style="width:100%">
+
                       </table>
                  
                
@@ -122,37 +110,39 @@
   @section('script')
   <script type="text/javascript">
 
-    var table_loc = $("#Local").DataTable({
-        "lengthMenu": [[ 100,50,20], [100,50,20]],
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ Registros",
-            "zeroRecords": "No hay registros...",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtrados de _MAX_ registros totales)",
-            "search": "Buscar:",
-            "select": {
-                "rows": ""
-            },
-            "paginate": {
-                "first": "First",
-                "last": "Last",
-                "next": "Sigue",
-                "previous": "Previo"
-            },
-        },
-        select: true,
-        "responsive": true
-    });
+
 
     function consultar_tabla(){  
         cursor_wait();
         $.get("{{asset('')}}local/consultar").then((data)=> {
-                     table_loc.clear().draw();
-                     table_loc.rows.add(data.sms);
-                     table_loc.columns.adjust().draw();
-                     remove_cursor_wait();
+
+            var table_loc = $("#Local").DataTable({
+                "lengthMenu": [[ 100,50,20], [100,50,20]],
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ Registros",
+                    "zeroRecords": "No hay registros...",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrados de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "select": {
+                        "rows": ""
+                    },
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Sigue",
+                        "previous": "Previo"
+                    },
+                },
+                select: true,
+                "responsive": true,
+                columns:data.titulos,
+                data:data.sms
+            });
+            remove_cursor_wait();
         });
+
       }
     consultar_tabla();
 
