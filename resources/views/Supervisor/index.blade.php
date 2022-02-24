@@ -17,7 +17,7 @@
                 
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
                  
-                        <table id="Supervisores" class="table display responsive nowrap table-bordered table-striped" style="width:100%">
+                        <table id="Supervisores" class="table display responsive table-bordered table-striped" style="width:100%">
                           <thead>
                             <tr>
                               <th></th>

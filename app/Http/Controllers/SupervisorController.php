@@ -7,7 +7,6 @@ use DB;
 use Hash;
 use App\Models\User;
 use Validator;
-use Crypt;
 use Input;
 
 

@@ -17,17 +17,18 @@
                 
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
                  
-                        <table id="Supervisores" class="table display responsive nowrap table-bordered table-striped" style="width:100%">
+                        <table id="Local" class="table display responsive table-bordered table-striped" style="width:100%">
                           <thead>
                             <tr>
-                              <th></th>
+                              <th style="width:5px !important"></th>
                               <th>Accciones</th>
-                              <th>Cedula</th>
+                              <th>Dueño</th>
+                              <th>Ruc</th>
                               <th>Nombre</th>
-                              <th>Apellido</th>
-                              <th>Email</th>
-                              <th>Direccion</th>
-              
+                              <th>Teléfono</th>
+                              <th>Dirección</th>
+                              <th>Coordenadas</th>
+                              
                             </tr>
                           </thead>
                       </table>
@@ -121,7 +122,7 @@
   @section('script')
   <script type="text/javascript">
 
-    var table_sup = $("#Supervisores").DataTable({
+    var table_loc = $("#Local").DataTable({
         "lengthMenu": [[ 100,50,20], [100,50,20]],
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros",
@@ -146,10 +147,10 @@
 
     function consultar_tabla(){  
         cursor_wait();
-        $.get("{{asset('')}}supervisor/consultar").then((data)=> {
-                     table_sup.clear().draw();
-                     table_sup.rows.add(data.sms);
-                     table_sup.columns.adjust().draw();
+        $.get("{{asset('')}}local/consultar").then((data)=> {
+                     table_loc.clear().draw();
+                     table_loc.rows.add(data.sms);
+                     table_loc.columns.adjust().draw();
                      remove_cursor_wait();
         });
       }
