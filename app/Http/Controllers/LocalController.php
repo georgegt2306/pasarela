@@ -20,6 +20,7 @@ class LocalController extends Controller
             ->whereNull('local.deleted_at')
             ->orderBy('local.id')
             ->get();
+      
       $titulos = [];
       $titulos[] = array('title' => '');
       $titulos[] = array('title' => 'Acciones');
@@ -29,9 +30,6 @@ class LocalController extends Controller
       $titulos[] = array('title' => 'Telefono');
       $titulos[] = array('title' => 'Direccion');
       $titulos[] = array('title' => 'Coordenadas');
-
-
-     
 
 
       $jsonenv=[];

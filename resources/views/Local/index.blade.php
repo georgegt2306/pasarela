@@ -17,10 +17,11 @@
                 
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
                  
-                        <table id="Local" class="table display responsive nowrap table-bordered table-striped" style="width:100%">
+                <div id="contenedor_principal" class="col-md-12" >
 
-                      </table>
-                 
+
+
+                </div>
                
               </div>
             </div>
@@ -112,12 +113,16 @@
 
 
 
-    function consultar_tabla(){  
+function consultar_tabla(){  
+        $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
+
+
+         var qw = '<table id="Local" class="table display responsive nowrap table-bordered table-striped" style="width:100%">';  
+      
         cursor_wait();
         $.get("{{asset('')}}local/consultar").then((data)=> {
-
-            var table_loc = $("#Local").DataTable({
-                "lengthMenu": [[ 100,50,20], [100,50,20]],
+            $('#contenedor_principal').html(qw);
+            $("#Local").DataTable({
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ Registros",
                     "zeroRecords": "No hay registros...",
@@ -125,9 +130,6 @@
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(filtrados de _MAX_ registros totales)",
                     "search": "Buscar:",
-                    "select": {
-                        "rows": ""
-                    },
                     "paginate": {
                         "first": "First",
                         "last": "Last",
@@ -135,16 +137,15 @@
                         "previous": "Previo"
                     },
                 },
-                select: true,
                 "responsive": true,
                 columns:data.titulos,
                 data:data.sms
             });
-            remove_cursor_wait();
+                     remove_cursor_wait();
         });
-
       }
     consultar_tabla();
+
 
     var form=document.getElementById('crear_supervisor');
     

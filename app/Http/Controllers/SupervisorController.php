@@ -44,7 +44,7 @@ class SupervisorController extends Controller
    
          $button= $boton_up.''.$boton_elim;
 
-         $imagen='<img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/man5-512.png" width="30" heigth="30"  >';
+         $imagen='<img src="'.asset('dist/img/user.png').'" width="30" heigth="30">';
 
          $jsonenvtemp = [$imagen,$button,$res->ci_ruc,$res->nombre,$res->apellido,$res->email,$res->direccion];
 
