@@ -1,4 +1,5 @@
 @extends('plantilla')
+@section('content')
 
 <style type="text/css">
 #mapid {
@@ -10,7 +11,6 @@
     z-index: 1051 !important;
 }
 </style>
-@section('content')
 
 <section class="content" style="margin-top: 15px;">
     <div class="row"> 
@@ -76,7 +76,8 @@
                 <div class="form-group row">
                   <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text"  placeholder="Nombre" name="nombre" id="nombre" maxlength="100">
+                      <input class="form-control" type="text"  placeholder="Nombre" name="nombre" id="nombre" maxlength="100" required>
+                      <div class="invalid-feedback">Ingrese Nombre.</div> 
                   </div>
                 </div>
                 <div class="form-group row">
@@ -387,7 +388,7 @@ class Localizacion{
     var form=document.getElementById('crear_local');
     
     form.addEventListener('submit', (event) => {
-     event.preventDefault();
+    event.preventDefault();
       if (!form.checkValidity()) {
         event.stopPropagation();
       }else {

@@ -64,7 +64,7 @@ class LocalController extends Controller
          $boton_elim=' <button title="eliminar" class="btn btn-danger" name="eliminar" onclick="elim('.$res->id.');"><i class="fa fa-trash"></i> </button>';
 
 
-         $error="'".'https://www.publicdomainpictures.net/pictures/280000/nahled/not-found-image-15383864787lu.jpg'."'";
+         $error="'".asset('images/local.png')."'";
 
          $imagen='<img src="'.$res->url_image.'" width="50" heigth="50" onerror="this.src='.$error.'" >';
    
