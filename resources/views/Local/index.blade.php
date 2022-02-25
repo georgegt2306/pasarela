@@ -26,8 +26,11 @@
               </div>
               <div class="card-body">
                 
+              @if(sizeof($lisup)==0)
+                  <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" disabled>Nuevo</button>  <span style="color:red">¡ NECESITA CREAR UN SUPERVISOR !</span>
+              @else
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
-                 
+               @endif  
                 <div id="contenedor_principal" class="col-md-12" >
 
 
