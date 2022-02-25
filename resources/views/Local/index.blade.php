@@ -1,4 +1,15 @@
 @extends('plantilla')
+
+<style type="text/css">
+#mapid {
+    height: 300px;
+    width: 100%;
+}
+
+.pac-container {
+    z-index: 1051 !important;
+}
+</style>
 @section('content')
 
 <section class="content" style="margin-top: 15px;">
@@ -29,6 +40,10 @@
         </div>  
 </section>
 
+
+
+
+
  <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
@@ -40,53 +55,103 @@
               </button>
             </div>
             <div class="modal-body">
-              
+
                 <div class="form-group row">
-                  <label for="ci_ruc" class="col-form-label col-sm-3">Cédula o Ruc:</label>
-                  <div class="col-sm-7">
-                   <input  class="form-control" type="text" name="ci_ruc" id="ci_ruc" onkeypress="return justNumbers(event);" required pattern="[0-9]{10}|[0-9]{13}">  
-                   <div class="invalid-feedback">Ingrese Cédula o Ruc.</div> 
-                    <span id="mensaje"></span>
+                  <label for="ruc" class="col-form-label col-sm-3">RUC:</label>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc" maxlength="100">
                   </div>
-                  <div class="col-sm-1" id="ced_as" style="display:none">
-                    <p style="color: red;font-size:25px ;" >*</p>
-                   </div>
                 </div>
 
                 <div class="form-group row">
-                <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
-                  <div class="col-sm-7">
-                   <input  class="form-control" type="text" name="nombre" id="nombre" required > 
-                   <div class="invalid-feedback">Ingrese Nombre.</div> 
+                  <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
+                  <div class="col-sm-8">
+                      <input class="form-control" type="text"  placeholder="Nombre" name="nombre" id="nombre" maxlength="100">
                   </div>
                 </div>
-     
                 <div class="form-group row">
-                  <label for="apellido" class="col-form-label col-sm-3">Apellido:</label>
-                    <div class="col-sm-7">
-                     <input class="form-control" type="text" name="apellido" id="apellido" required> <div class="invalid-feedback">Ingrese Apellido.</div> 
-                    </div>
+                  <label for="descripcion" class="col-form-label col-sm-3">Descripción:</label>
+                  <div class="col-sm-8">
+                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion" id="descripcion" maxlength="100">
+                  </div>
                 </div>
                 <div class="form-group row">
-                  <label for="email" class="col-form-label col-sm-3">Email:</label>
-                    <div class="col-sm-7">
-                     <input class="form-control" type="email" name="email" id="email" required> 
-                      <div class="invalid-feedback">Ingrese Email Correctamente.</div> 
-                    </div>
-                </div>
-                <div class="form-group row">
-                  <label for="contra" class="col-form-label col-sm-3">Contraseña:</label>
-                    <div class="col-sm-7">
-                     <input class="form-control" type="password" name="contra" id="contra" required minlength="6">  <div class="invalid-feedback">Ingrese Contraseña, minimo 6 caracteres.</div> 
-                    </div>
+                    <label for="telefono" class="col-form-label col-sm-3">Teléfono:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" placeholder="Teléfono" name="telefono" id="telefono" maxlength="1000">
+                        </div>
                 </div>                
                 <div class="form-group row">
                   <label for="direccion" class="col-form-label col-sm-3">Dirección:</label>
-                  <div class="col-sm-7">
-                    <textarea class="form-control" name="direccion" id="direccion" cols="30" rows="3" required></textarea>  
-                     <div class="invalid-feedback">Ingrese Dirección.</div> 
+                  <div class="col-sm-8">
+                    <input class="form-control" type="text" placeholder="Dirección" name="direccion" id="direccion" maxlength="1000">
                   </div>
                 </div>
+
+
+                <div class="form-group row">
+                  <label for="coordenadas" class="col-form-label col-sm-3">Coordenadas:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="autocomplete" id="autocomplete" class="form-control">
+                      <div id="mapid"></div>
+                    </div>
+                    <input type="hidden" name="latitud" id="latitud">
+                    <input type="hidden" name="longitud" id="longitud">
+                </div>
+
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">Extensión:</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" type="text" placeholder="Extensión" name="extension" id="extension" maxlength="50">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                      <label for="nombre" class="col-form-label col-sm-3">Seleccione:</label>
+                    <div class="col-sm-4">
+                        <input type="checkbox" value="1" id="1"  /> Imagen<br/>
+                        <input type="checkbox" value="2"  id="2" /> Url <br/>
+                    </div>
+                </div>
+
+
+                <div id="habilitar_imagen" style="display: none;">             
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">Imagen:</label>
+                  <div class="col-sm-4">
+                    <label for="file" class="btn btn-info"> <i class="fas fa-upload"></i></label>
+                    <input type="file" name="file" id="file" style='display: none;' accept="image/*" />
+                  </div>
+                    <div class="col-sm-4" id="imagePreview">
+                    
+                    </div>
+                </div>
+                </div> 
+
+                <input type="hidden" name="validar" id="validar" value="">
+                  
+                 <div id="habilitar_url" style="display: none;">
+                 <div class="form-group row">
+                  <label for="url" class="col-form-label col-sm-3">Url:</label>
+                  <div class="col-sm-8 input-group mb-3">
+                  <input class="form-control" type="text" name="url" id="url" placeholder="URL"  maxlength="1000" >
+                  <div class="input-group-append" >
+                    <span class="input-group-text" onclick="mostrarUrl();" style="cursor:pointer;"><i class="fas fa-check"></i></span>
+                  </div> 
+                  </div>
+                   <div class="col-sm-12" id="imagePreviewUrl" align="center">
+                      
+                    </div>
+                 </div>
+                 </div> 
+
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">Email:</label>
+                  <div class="col-sm-8">
+                  <input class="form-control" type="text" placeholder="Email" name="email" id="email" maxlength="100">
+                  </div>
+                </div>
+
               
             </div>
             <div class="modal-footer">
@@ -100,20 +165,131 @@
 
 
       <div class="modal fade" id="modale" tabindex="-1" role="dialog" aria-labelledby="modaleditTitle" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
-
        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content" id="vistamodal_edit">               
           </div>
        </div>
-</div>
+      </div>
 
   @stop
   @section('script')
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPvCzKd8wSAV2oEFkmSXd7kjGivjVEZ2E&libraries=places"></script>
   <script type="text/javascript">
 
 
+class Localizacion{
+  constructor(callback){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition((position)=>{
+              this.latitude =position.coords.latitude;
+              this.longitude=position.coords.longitude;
+              callback();
+      });    
+    } else{
+        alert("tu navegador no soporta geolocation")
+    }
+  } 
+}
 
-function consultar_tabla(){  
+
+  const ubicacion = new Localizacion(()=>{
+  const myLatLng={lat: ubicacion.latitude, lng: ubicacion.longitude};
+
+        $('#latitud').val(ubicacion.latitude);
+        $('#longitud').val(ubicacion.longitude);
+  const options = {
+    center:myLatLng,
+    zoom: 18,
+    gestureHandling: 'greedy'
+  }
+
+  var map= document.getElementById('mapid');
+
+  const mapa= new google.maps.Map(map,options);
+  mapa.setTilt(45);
+
+
+  const marcado= new google.maps.Marker({
+      position: myLatLng,
+      draggable: true,
+      map: mapa
+  });
+
+  var contentString = '<strong> Coord. X:'+ ubicacion.latitude +' Coord. Y:'+ ubicacion.longitude+'</strong>';
+
+  var informacion = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  function smoothZoom (map, max, cnt) {
+    if (cnt >= max) {
+        return;
+    }
+    else {
+        z = google.maps.event.addListener(mapa, 'zoom_changed', function(event){
+            google.maps.event.removeListener(z);
+            smoothZoom(map, max, cnt + 1);
+        });
+        setTimeout(function(){map.setZoom(cnt)}, 80); 
+    }
+  }  
+
+
+  marcado.addListener('click',function(){
+    informacion.open(mapa,marcado);
+     mapa.setCenter(marcado.getPosition());
+     smoothZoom(mapa, 17, mapa.getZoom());
+  });
+
+
+  var autocomplete=document.getElementById('autocomplete');
+  const search= new google.maps.places.Autocomplete(autocomplete);
+  search.bindTo("bounds",mapa);
+
+  ///////////////////////////////////////////////////////
+    search.addListener('place_changed', function(){
+        informacion.close();
+        marcado.setVisible(false);
+        var place= search.getPlace();
+
+        if(!place.geometry.viewport){
+          window.alert("Error al mostrar el lugar");
+          return;
+        }else  {
+          mapa.setCenter(place.geometry.location);
+          mapa.setZoom(20);
+        }
+        marcado.setPosition(place.geometry.location);
+        marcado.setVisible(true);
+
+        $('#latitud').val(place.geometry.location.lat());
+        $('#longitud').val(place.geometry.location.lng());
+        informacion.setContent('<strong> Coord. X:'+ place.geometry.location.lat() +' Coord. Y:'+ place.geometry.location.lng()+'</strong>');
+
+        
+
+
+      })
+    /////////////////////////////////////////////////////////////////////////////
+        marcado.addListener("dragend", function (ev) {
+              var valorx = ev.latLng.lat();
+              var valory = ev.latLng.lng();
+
+               informacion.setContent('<strong> Coord. X:'+ valorx +' Coord. Y:'+ valory +'</strong>');
+                $('#latitud').val(valorx);
+                $('#longitud').val(valory);
+        });
+
+});
+
+
+
+
+
+
+
+
+    function consultar_tabla(){  
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
 
 
@@ -143,8 +319,68 @@ function consultar_tabla(){
             });
                      remove_cursor_wait();
         });
-      }
+    }
+
     consultar_tabla();
+
+
+   (function(){
+    function filePreview(input){
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+         reader.onload = function(e){
+          $('#imagePreview').html("<img src='"+e.target.result+"' width='150' heigth='150' >");
+         }
+         reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $('#file').change(function(){
+      filePreview(this);
+   
+    })
+  })();
+
+
+
+  $(document).ready(function() {
+    $('input[type=checkbox]#1').on('click', function(){
+      $('#url').val('');
+      $('#validado').val('');
+      $('#imagePreviewUrl').html('');
+      $('#habilitar_url').css({'display':'none'});
+      $('#habilitar_imagen').css({'display':'block'});
+
+      $('input[type=checkbox]#2').prop('checked',false);
+      $(this).prop('checked', true);
+
+    });
+
+    $('input[type=checkbox]#2').on('click', function(){
+      $('#file').val('');
+      $('#imagePreview').html('');
+      $('#habilitar_url').css({'display':'block'});
+      $('#habilitar_imagen').css({'display':'none'});
+      $('input[type=checkbox]#1').prop('checked',false);
+      $(this).prop('checked', true);
+    });
+  });
+
+
+  function mostrarUrl(){
+    var infourl = $("#url").val();
+    $('#imagePreviewUrl').html("<img src='"+infourl+"' width='150' heigth='150' onerror=errorurl(); >");
+    $("#validar").val('correcto');
+
+  }
+
+  function errorurl(){
+     $('#imagePreviewUrl').html("<b style='color:red;'>Imagen no encontrada</b>");
+     $("#url").val('');
+     $("#validar").val('incorrecto');
+  }
+
+
+
 
 
     var form=document.getElementById('crear_supervisor');
@@ -233,7 +469,7 @@ function consultar_tabla(){
           })   
             }
         })
-  }
+      }
 
 
 

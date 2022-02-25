@@ -20,7 +20,6 @@
                 <div id="contenedor_principal" class="col-md-12" >
 
 
-
                 </div>
                  
                
@@ -132,9 +131,6 @@
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(filtrados de _MAX_ registros totales)",
                     "search": "Buscar:",
-                    "select": {
-                        "rows": ""
-                    },
                     "paginate": {
                         "first": "First",
                         "last": "Last",
