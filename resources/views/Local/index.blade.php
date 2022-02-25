@@ -264,7 +264,7 @@ class Localizacion{
 
         $('#latitud').val(place.geometry.location.lat());
         $('#longitud').val(place.geometry.location.lng());
-        informacion.setContent('<<div><b>Coord. X:</b>'+ place.geometry.location.lat() +'</div><div><b>Coord. Y:</b>'+ place.geometry.location.lng()+'</div>');
+        informacion.setContent('<div><b>Coord. X:</b>'+ place.geometry.location.lat() +'</div><div><b>Coord. Y:</b>'+ place.geometry.location.lng()+'</div>');
 
 
       })
@@ -273,7 +273,7 @@ class Localizacion{
               var valorx = ev.latLng.lat();
               var valory = ev.latLng.lng();
 
-               informacion.setContent('<<div><b>Coord. X:</b>'+ valorx +'</div><div><b>Coord. Y:</b>'+ valory +'</div>');
+               informacion.setContent('<div><b>Coord. X:</b>'+ valorx +'</div><div><b>Coord. Y:</b>'+ valory +'</div>');
                 $('#latitud').val(valorx);
                 $('#longitud').val(valory);
         });
