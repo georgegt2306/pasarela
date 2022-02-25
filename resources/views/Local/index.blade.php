@@ -43,11 +43,10 @@
 
 
 
-
  <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
-            <form class="needs-validation" id="crear_supervisor" autocomplete="off" novalidate>
+            <form class="needs-validation" id="crear_local" autocomplete="off" novalidate>
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Nuevo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -55,7 +54,18 @@
               </button>
             </div>
             <div class="modal-body">
-
+                <div class="form-group row">
+                  <label for="superv" class="col-form-label col-sm-3">Dueño:</label>
+                  <div class="col-sm-8">
+                    <select id="superv" name="superv" class="form-control"  style="width:100%">
+                       @for($i=0;$i<sizeof($lisup);$i++)
+                          <option value="{{$lisup[$i][0]}}">{{$lisup[$i][1]}}</option> 
+                       @endfor                     
+                    </select>
+                   
+                  </div>
+                </div>                  
+           
                 <div class="form-group row">
                   <label for="ruc" class="col-form-label col-sm-3">RUC:</label>
                   <div class="col-sm-8">
@@ -88,22 +98,19 @@
                   </div>
                 </div>
 
+                <p style="text-align: center;font-weight: bold;font-size: 17px;">-- Coordenadas --</p>
 
-                <div class="form-group row">
-                  <label for="coordenadas" class="col-form-label col-sm-3">Coordenadas:</label>
-                    <div class="col-sm-8">
-                      <input type="text" name="autocomplete" id="autocomplete" class="form-control">
-                      <div id="mapid"></div>
+                <div class="form-group" >
+                  <div class="d-flex justify-content-center">
+                    <div class="col-md-10" >
+                      
+                        <input type="text" name="autocomplete" id="autocomplete" class="form-control">
+                        <div id="mapid"></div>
+                     
                     </div>
+                  </div>
                     <input type="hidden" name="latitud" id="latitud">
                     <input type="hidden" name="longitud" id="longitud">
-                </div>
-
-                <div class="form-group row">
-                    <label for="nombre" class="col-form-label col-sm-3">Extensión:</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Extensión" name="extension" id="extension" maxlength="50">
-                    </div>
                 </div>
 
                 <div class="form-group row">
@@ -113,7 +120,6 @@
                         <input type="checkbox" value="2"  id="2" /> Url <br/>
                     </div>
                 </div>
-
 
                 <div id="habilitar_imagen" style="display: none;">             
                 <div class="form-group row">
@@ -145,12 +151,6 @@
                  </div>
                  </div> 
 
-                <div class="form-group row">
-                    <label for="nombre" class="col-form-label col-sm-3">Email:</label>
-                  <div class="col-sm-8">
-                  <input class="form-control" type="text" placeholder="Email" name="email" id="email" maxlength="100">
-                  </div>
-                </div>
 
               
             </div>
@@ -176,6 +176,9 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPvCzKd8wSAV2oEFkmSXd7kjGivjVEZ2E&libraries=places"></script>
   <script type="text/javascript">
 
+    $('#superv').select2({
+      theme: 'bootstrap4'
+    })
 
 class Localizacion{
   constructor(callback){
@@ -291,7 +294,7 @@ class Localizacion{
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
 
 
-         var qw = '<table id="Local" class="table display responsive  table-bordered table-striped" style="width:100%">';  
+         var qw = '<table id="Local" class="table display responsive nowrap table-bordered table-striped" style="width:100%">';  
       
         cursor_wait();
         $.get("{{asset('')}}local/consultar").then((data)=> {
@@ -381,7 +384,7 @@ class Localizacion{
 
 
 
-    var form=document.getElementById('crear_supervisor');
+    var form=document.getElementById('crear_local');
     
     form.addEventListener('submit', (event) => {
      event.preventDefault();
@@ -390,7 +393,7 @@ class Localizacion{
       }else {
         const crear_sup = new FormData(form); 
             $.ajax({
-                url:"{{asset('')}}supervisor",
+                url:"{{asset('')}}local",
                 headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: 'POST',
                 dataType: 'json',

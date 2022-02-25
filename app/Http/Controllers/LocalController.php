@@ -5,13 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Local;
+use App\Models\User;
 use Validator;
 use Input;
 
 class LocalController extends Controller
 {
     public function index(){
-    return view('Local.index');
+
+     $supervisor= User::where('id_tipo','2')
+                  ->select('id', 'nombre')
+                  ->whereNull('deleted_at')
+                  ->get();
+    
+    $lisup=[];
+
+    foreach ($supervisor as $sup) {
+        $local= Local::where('id_supervisor', $sup->id)
+                ->select('id_supervisor')
+                ->whereNull('deleted_at')
+                ->count();
+
+
+         if($local!=1){
+            array_push($lisup, [$sup->id, $sup->nombre]);
+         }     
+
+    }
+
+    
+    return view('Local.index',compact('lisup'));
    }
    public function consulta_data(){
 
@@ -56,64 +79,65 @@ class LocalController extends Controller
    }
 
     public function store(Request $request){
-
+        $userid = \Auth::id();
 
         $v = Validator::make($request->all(),[
-              'codigo'=>"required|unique:".$cstring.".locales,codigo",
+              'ruc'=>"required|unique:.local,ruc",
             ]);
 
 
         if($v->fails()){
-          $mensajedereturn=strtoupper($v->errors()->first('codigo'));
-          return response()->json(["sms"=>"e_codigo" ,"mensaje" => $mensajedereturn]);     
-        }else{
+          $mensajedereturn=strtoupper($v->errors()->first('ruc'));
 
-          $codigofinal = verificarCodigo($request->codigo,'locales',$cstring,'codigo','id',$modulo,$ilca,$url);
-
-    try {
-        DB::beginTransaction();
-
-        $id=DB::table('locales')->insertGetId(
-        [ 'codigo'=>$codigofinal,
-          'nombre'=>$request->nombre,
-          'direccion'=>$request->direccion,
-          'coordenadax'=>$request->coordenadax,
-          'coordenaday'=>$request->coordenaday,
-          'telefono'=>$request->telefono,
-          'extension'=>$request->extension,
-          'email'=>$request->email,
-          'horas'=>$request->horas,
-          'orden'=>$request->orden,
-          'updated_at' =>date('Ymd H:i:s'),
-          'created_at' =>date('Ymd H:i:s')
-        ]);
-        
-        $id2=$id.'.png';
-
-            if($archivo=$request->file('file')){
-                $path= asset('images/local/'.$id2);
-                $archivo->move('images/local', $id2);
-            }
-
-            else{
-                $path=$request->url;
-            }
-
-           DB::table('locales')
-              ->where('id', $id)
-              ->update(['image' => $path==null?'':$path]);
-
-
-           DB::commit();
-            
-            return response()->json(["sms"=>true,"mensaje"=>"Se creo correctamente"]);                    
-
-          }catch(\Exception $e) 
-          {
-            DB::rollBack();
-            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
-          }
+          return response()->json(["sms"=>false ,"mensaje" => $mensajedereturn]);     
         }
+
+
+        try {
+            DB::beginTransaction();
+
+            $id=Local::insertGetId(
+            [ 'ruc'=>$request->ruc,
+              'id_supervisor'=>$request->superv,
+              'nombre'=>$request->nombre,
+              'descripcion'=>$request->descripcion,
+              'telefono'=>$request->telefono,
+              'direccion'=>$request->direccion,
+              'latitud'=>$request->latitud,
+              'longitud'=>$request->longitud,
+              'url_image'=>'',
+              'updated_at' =>now(),
+              'created_at' =>now(),
+              'id_admin' => $userid,
+              'user_updated' => $userid
+
+            ]);
+            
+            $id2=$id.'.png';
+
+                if($archivo=$request->file('file')){
+                    $path= asset('images/local/'.$id2);
+                    $archivo->move('images/local', $id2);
+                }
+
+                else{
+                    $path=$request->url;
+                }
+
+               Local::where('id', $id)
+                  ->update(['url_image' => $path==null?'':$path]);
+
+
+               DB::commit();
+                
+                return response()->json(["sms"=>true,"mensaje"=>"Se creo correctamente"]);                    
+
+              }catch(\Exception $e) 
+              {
+                DB::rollBack();
+                return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+              }
+        
     }
 
 

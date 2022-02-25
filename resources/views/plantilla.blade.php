@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css')}}">
     <link rel="stylesheet" href="{{ asset('/dist/css/cursor.css')}}">
     <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css')}}">
     <link href="{{ asset('/plugins/ionicons.css')}}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
@@ -35,6 +37,7 @@
     <script src="{{ asset('/dist/js/adminlte.js')}}"></script>
     <script src="{{ asset('/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+    <script src="{{ asset('/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('/plugins/jquery-validation/additional-methods.min.js')}}"></script>
     <script src="{{asset('/plugins/sweetalert2.js')}}"></script>
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
