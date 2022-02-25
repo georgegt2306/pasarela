@@ -215,7 +215,7 @@ class Localizacion{
       map: mapa
   });
 
-  var contentString = '<strong> Coord. X:'+ ubicacion.latitude +' Coord. Y:'+ ubicacion.longitude+'</strong>';
+  var contentString = '<div><b>Coord. X:</b>'+ ubicacion.latitude +'</div><div><b>Coord. Y:</b>'+ ubicacion.longitude+'</div>';
 
   var informacion = new google.maps.InfoWindow({
     content: contentString
@@ -264,9 +264,7 @@ class Localizacion{
 
         $('#latitud').val(place.geometry.location.lat());
         $('#longitud').val(place.geometry.location.lng());
-        informacion.setContent('<strong> Coord. X:'+ place.geometry.location.lat() +' Coord. Y:'+ place.geometry.location.lng()+'</strong>');
-
-        
+        informacion.setContent('<<div><b>Coord. X:</b>'+ place.geometry.location.lat() +'</div><div><b>Coord. Y:</b>'+ place.geometry.location.lng()+'</div>');
 
 
       })
@@ -275,7 +273,7 @@ class Localizacion{
               var valorx = ev.latLng.lat();
               var valory = ev.latLng.lng();
 
-               informacion.setContent('<strong> Coord. X:'+ valorx +' Coord. Y:'+ valory +'</strong>');
+               informacion.setContent('<<div><b>Coord. X:</b>'+ valorx +'</div><div><b>Coord. Y:</b>'+ valory +'</div>');
                 $('#latitud').val(valorx);
                 $('#longitud').val(valory);
         });
