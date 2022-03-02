@@ -110,7 +110,7 @@
 
 
     function consultar_tabla(){  
-        $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
+        $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='300'  height='200' /></div>");
 
 
          var qw = '<table id="Supervisores" class="table display responsive table-bordered table-striped" style="width:100%">';  
