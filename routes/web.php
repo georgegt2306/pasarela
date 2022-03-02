@@ -42,3 +42,6 @@ Route::get('local/consultar','LocalController@consulta_data')->middleware('auth.
 Route::resource('/vendedor','VendedorController')->except('show')->middleware('sup.admin');
 Route::get('vendedor/consultar','VendedorController@consulta_data')->middleware('sup.admin');
 
+Route::resource('/producto','ProductoController')->except('show')->middleware('sup.admin');
+Route::get('producto/consultar','ProductoController@consulta_data')->middleware('sup.admin');
+

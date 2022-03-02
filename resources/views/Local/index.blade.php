@@ -53,7 +53,7 @@
  <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
-            <form class="needs-validation" id="crear_local" autocomplete="off" novalidate>
+            <form class="needs-validation" id="crear_local" autocomplete="off"  novalidate>
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Nuevo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -65,13 +65,14 @@
                 <div class="form-group row">
                   <label for="ruc" class="col-form-label col-sm-3">RUC:</label>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc" required maxlength="100">
+                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc"  onkeypress="return justNumbers(event);" required pattern="[0-9]{10}|[0-9]{13}">
+                     <div class="invalid-feedback">Ingrese RUC.</div> 
                   </div>
                 </div>                
                 <div class="form-group row">
                   <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text"  placeholder="Nombre" name="nombre" id="nombre" maxlength="100" required>
+                      <input class="form-control" type="text"  placeholder="Nombre" name="nombre" id="nombre" required maxlength="150">
                       <div class="invalid-feedback">Ingrese Nombre.</div> 
                   </div>
                 </div>
@@ -89,21 +90,22 @@
                 <div class="form-group row">
                   <label for="descripcion" class="col-form-label col-sm-3">Descripción:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion" id="descripcion" required  maxlength="100">
+                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion" id="descripcion" required  maxlength="1000">
+                      <div class="invalid-feedback">Ingrese Descripción.</div> 
                   </div>
-                   <div class="invalid-feedback">Ingrese Descripción.</div> 
                 </div>
                 <div class="form-group row">
                     <label for="telefono" class="col-form-label col-sm-3">Teléfono:</label>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="Teléfono" name="telefono" id="telefono" maxlength="10" onkeypress="return justNumbers(event);" required>
+                            <input class="form-control" type="tel" placeholder="Teléfono" name="telefono" id="telefono" onkeypress="return justNumbers(event);" required  maxlength="10" >
+                            <div class="invalid-feedback">Ingrese teléfono.</div> 
                         </div>
-                        <div class="invalid-feedback">Ingrese teléfono.</div> 
+                        
                 </div>                
                 <div class="form-group row">
                   <label for="direccion" class="col-form-label col-sm-3">Dirección:</label>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" placeholder="Dirección" name="direccion" id="direccion" maxlength="1000" required>
+                    <input class="form-control" type="text" placeholder="Dirección" name="direccion" id="direccion" required  maxlength="1000">
                     <div class="invalid-feedback">Ingrese direccion.</div> 
                   </div>
                 </div>
@@ -114,7 +116,7 @@
                   <div class="d-flex justify-content-center">
                     <div class="col-md-10" >
                       
-                        <input type="text" name="autocomplete" id="autocomplete" class="form-control" />
+                        <input type="text" name="autocomplete" id="autocomplete" class="form-control">
                         <div id="mapid"></div>
                      
                     </div>

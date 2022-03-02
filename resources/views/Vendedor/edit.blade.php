@@ -1,4 +1,4 @@
-<form  class="needs-validation" id="edit_supervisor" autocomplete="off" novalidate>
+<form  class="needs-validation" id="edit_vendedor" autocomplete="off" novalidate>
    @csrf 
    {{ method_field('PUT') }}
     <div class="modal-header">
@@ -56,7 +56,7 @@
 	  $('#modale').modal();
 	  $('button[name=editar]').attr('disabled',false);
 
-    var form2=document.getElementById('edit_supervisor');
+    var form2=document.getElementById('edit_vendedor');
 
 
     form2.addEventListener('submit', (event) => {
@@ -66,7 +66,7 @@
       }else {
         const edit_sup = new FormData(form2); 
             $.ajax({
-                url:"{{asset('')}}supervisor/{{$id}}",
+                url:"{{asset('')}}vendedor/{{$id}}",
                 type: 'POST',
                 dataType: 'json',
                 contentType: false,

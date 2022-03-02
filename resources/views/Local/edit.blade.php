@@ -16,7 +16,8 @@
                 <div class="form-group row">
                     <label for="nombre_edit" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-8">
-                  <input class="form-control" type="text" name="nombre_edit" id="nombre_edit"  value="{{$result_edit->nombre}}" maxlength="100">
+                    <input class="form-control" type="text" name="nombre_edit" id="nombre_edit"  value="{{$result_edit->nombre}}" required maxlength="100">
+                     <div class="invalid-feedback">Ingrese Nombre.</div> 
                   </div>
                 </div>
 
@@ -33,21 +34,21 @@
                 <div class="form-group row">
                   <label for="descripcion_edit" class="col-form-label col-sm-3">Descripción:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion_edit" id="descripcion_edit"  value="{{$result_edit->descripcion}}" required  maxlength="100">
-                  </div>
-                   <div class="invalid-feedback">Ingrese Descripción.</div> 
+                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion_edit" id="descripcion_edit"  value="{{$result_edit->descripcion}}" required  maxlength="1000">
+                      <div class="invalid-feedback">Ingrese Descripción.</div> 
+                  </div>                  
                 </div>                
 
                 <div class="form-group row">
                     <label for="telefono_edit" class="col-form-label col-sm-3">Teléfono:</label>
                   <div class="col-sm-8">
-                  <input class="form-control" type="text" name="telefono_edit" id="telefono_edit"  value="{{$result_edit->telefono}}" maxlength="50">
+                  <input class="form-control" type="text" name="telefono_edit" id="telefono_edit"  value="{{$result_edit->telefono}}"onkeypress="return justNumbers(event);" required maxlength="10">
                   </div>
                 </div>
                 <div class="form-group row">
                     <label for="direccion_edit" class="col-form-label col-sm-3">Direccion:</label>
                   <div class="col-sm-8">
-                  <input class="form-control" type="text" name="direccion_edit" id="direccion_edit"  value="{{$result_edit->direccion}}" maxlength="100">
+                  <input class="form-control" type="text" name="direccion_edit" id="direccion_edit"  value="{{$result_edit->direccion}}" required maxlength="1000">
                   </div>
                 </div>
 

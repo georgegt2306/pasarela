@@ -1,6 +1,13 @@
 @extends('plantilla')
 @section('content')
 
+@if(session()->has('error'))
+    <div class="alert alert-danger">
+        {{ session()->get('error') }}
+    </div>
+@endif
+
+
 <section class="content" style="margin-top: 15px;">
     <div class="row"> 
         <div class="col-md-12">
@@ -18,10 +25,7 @@
                 <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
                  
                 <div id="contenedor_principal" class="col-md-12" >
-
-
-                </div>
-                 
+                </div>  
                
               </div>
             </div>
@@ -29,7 +33,7 @@
         </div>  
 </section>
 
- <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
+ <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
             <form class="needs-validation" id="crear_vendedores" autocomplete="off" novalidate>
@@ -39,8 +43,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              
+            <div class="modal-body">  
                 <div class="form-group row">
                   <label for="ci_ruc" class="col-form-label col-sm-3">Cédula o Ruc:</label>
                   <div class="col-sm-7">
@@ -52,7 +55,6 @@
                     <p style="color: red;font-size:25px ;" >*</p>
                    </div>
                 </div>
-
                 <div class="form-group row">
                 <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-7">
@@ -60,7 +62,6 @@
                    <div class="invalid-feedback">Ingrese Nombre.</div> 
                   </div>
                 </div>
-     
                 <div class="form-group row">
                   <label for="apellido" class="col-form-label col-sm-3">Apellido:</label>
                     <div class="col-sm-7">
@@ -70,7 +71,7 @@
                 <div class="form-group row">
                   <label for="email" class="col-form-label col-sm-3">Email:</label>
                     <div class="col-sm-7">
-                     <input class="form-control" type="email" name="email" id="email" required> 
+                      <input class="form-control" type="email" name="email" id="email" required> 
                       <div class="invalid-feedback">Ingrese Email Correctamente.</div> 
                     </div>
                 </div>
@@ -87,7 +88,6 @@
                      <div class="invalid-feedback">Ingrese Dirección.</div> 
                   </div>
                 </div>
-              
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -111,41 +111,41 @@
   @section('script')
   <script type="text/javascript">
 
+  function consultar_tabla(){  
+    $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
 
-
-    function consultar_tabla(){  
-        $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
-
-
-         var qw = '<table id="Vendedores" class="table display responsive table-bordered table-striped" style="width:100%">';  
+    var qw = '<table id="Vendedores" class="table display responsive table-bordered table-striped" style="width:100%">';  
       
-        cursor_wait();
-        $.get("{{asset('')}}vendedor/consultar").then((data)=> {
-            $('#contenedor_principal').html(qw);
-            $("#Vendedores").DataTable({
-                "lengthMenu": [[ 100,50,20], [100,50,20]],
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ Registros",
-                    "zeroRecords": "No hay registros...",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                    "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrados de _MAX_ registros totales)",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "first": "First",
-                        "last": "Last",
-                        "next": "Sigue",
-                        "previous": "Previo"
-                    },
-                },
-                select: true,
-                "responsive": true,
-                columns:data.titulos,
-                data:data.sms
-            });
-                     remove_cursor_wait();
-        });
-      }
+    cursor_wait();
+    $.get("{{asset('')}}vendedor/consultar").then((data)=> {
+          $('#contenedor_principal').html(qw);
+          $("#Vendedores").DataTable({
+              "lengthMenu": [[ 100,50,20], [100,50,20]],
+              "language": {
+                  "lengthMenu": "Mostrar _MENU_ Registros",
+                  "zeroRecords": "No hay registros...",
+                  "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                  "infoEmpty": "No hay registros disponibles",
+                  "infoFiltered": "(filtrados de _MAX_ registros totales)",
+                  "search": "Buscar:",
+                  "paginate": {
+                      "first": "First",
+                      "last": "Last",
+                      "next": "Sigue",
+                      "previous": "Previo"
+                  },
+              },
+               columnDefs: [
+                { width: 40, targets: 0 },
+                { width: 80, targets: 1 }
+              ],
+              "responsive": true,
+              columns:data.titulos,
+              data:data.sms
+          });
+                   remove_cursor_wait();
+      });
+    }
     consultar_tabla();
 
     var form=document.getElementById('crear_vendedores');
@@ -196,7 +196,7 @@
     function mostrarmodal(id){
         cursor_wait();
         $('button[name=editar]').attr('disabled',true);
-        $("#vistamodal_edit").load("{{asset('')}}vendedores/"+id+"/edit");
+        $("#vistamodal_edit").load("{{asset('')}}vendedor/"+id+"/edit");
     }
 
     function elim(id){
@@ -213,7 +213,7 @@
       }).then((result) => {
         if (result.value) {
             $.ajax({
-            url:"{{asset('')}}vendedores/"+id,
+            url:"{{asset('')}}vendedor/"+id,
             headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'DELETE',
             dataType: 'json',

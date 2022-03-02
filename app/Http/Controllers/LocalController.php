@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Local;
 use App\Models\User;
+use App\Models\Vend_local;
+use App\Models\Producto;
 use Validator;
 use Input;
 
@@ -50,7 +52,7 @@ class LocalController extends Controller
       $titulos[] = array('title' => 'Dueño');
       $titulos[] = array('title' => 'Ruc');
       $titulos[] = array('title' => 'Nombre');
-      $titulos[] = array('title' => 'Telefono');
+      $titulos[] = array('title' => 'Teléfono');
       $titulos[] = array('title' => 'Direccion');
       $titulos[] = array('title' => 'Coordenadas');
 
@@ -66,7 +68,8 @@ class LocalController extends Controller
 
          $error="'".asset('images/local.png')."'";
 
-         $imagen='<img src="'.$res->url_image.'" width="50" height="50" onerror="this.src='.$error.'" >';
+         $time = date("H:i:s");
+         $imagen='<img src="'.$res->url_image.'?time='.$time.'" width="50" height="50" onerror="this.src='.$error.'" >';
    
          $button= $boton_up.''.$boton_elim;
 
@@ -228,17 +231,15 @@ class LocalController extends Controller
         }
     }
     public function destroy($id){
-      $userid = \Auth::id();
+        $userid = \Auth::id();
 
-               $tien_vend= DB::table("vend_local")
-                            ->where("id_local", $id)
-                            ->whereNull('deleted_at')
-                            ->count();
+        $tien_vend= Vend_local::where("id_local", $id)
+                ->whereNull('deleted_at')
+                ->count();
 
-               $tien_pro= DB::table("producto")
-                            ->where("id_local",$id)
-                            ->whereNull('deleted_at')
-                            ->count();
+        $tien_pro= Producto::where("id_local",$id)
+                ->whereNull('deleted_at')
+                ->count();
          if($tien_vend>0){
             return response()->json(["sms"=>false ,"mensaje" => "Este local cuenta con vendedores activos"]);
          }  
@@ -246,10 +247,9 @@ class LocalController extends Controller
             return response()->json(["sms"=>false ,"mensaje" => "Este local cuenta con prodcutos activos"]);
          }  
 
+        try {
 
-      try 
-          {
-          DB::beginTransaction();
+            DB::beginTransaction();
 
             Local::where('id', $id)->update([
                'updated_at' =>now(),
@@ -257,14 +257,13 @@ class LocalController extends Controller
                'user_updated' => $userid
             ]);
 
-       DB::commit();
+            DB::commit();
         
-        return response()->json(["sms"=>true,"mensaje"=>"Se elimino correctamente"]);
+            return response()->json(["sms"=>true,"mensaje"=>"Se elimino correctamente"]);
 
-      }catch(\Exception $e) 
-      {
-        DB::rollBack();
-        return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
       }
     }
 }

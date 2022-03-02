@@ -54,13 +54,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{asset('/user')}}" class="nav-link">
+                <a href="{{asset('/producto')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Producto</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{asset('/registro')}}" class="nav-link">
+                <a href="{{asset('/promociones')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Promociones</p>
                 </a>

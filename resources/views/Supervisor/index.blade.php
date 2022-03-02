@@ -14,22 +14,16 @@
                 </div>
               </div>
               <div class="card-body">
-                
-                <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>   
-                 
+                <button  type="button" title="Nuevo"  class="btn btn-primary" style="margin-bottom: 10px" data-toggle="modal" data-target="#modalcreate">Nuevo</button>    
                 <div id="contenedor_principal" class="col-md-12" >
-
-
                 </div>
-                 
-               
               </div>
             </div>
           </div>
-        </div>  
+    </div>  
 </section>
 
- <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
             <form class="needs-validation" id="crear_supervisor" autocomplete="off" novalidate>
@@ -40,11 +34,10 @@
               </button>
             </div>
             <div class="modal-body">
-              
                 <div class="form-group row">
                   <label for="ci_ruc" class="col-form-label col-sm-3">Cédula o Ruc:</label>
                   <div class="col-sm-7">
-                   <input  class="form-control" type="text" name="ci_ruc" id="ci_ruc" onkeypress="return justNumbers(event);" required pattern="[0-9]{10}|[0-9]{13}">  
+                   <input  class="form-control" type="text" name="ci_ruc" id="ci_ruc" onkeypress="return justNumbers(event);" required pattern="[0-9]{10}|[0-9]{13}" maxlength="13">  
                    <div class="invalid-feedback">Ingrese Cédula o Ruc.</div> 
                     <span id="mensaje"></span>
                   </div>
@@ -56,7 +49,7 @@
                 <div class="form-group row">
                 <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-7">
-                   <input  class="form-control" type="text" name="nombre" id="nombre" required > 
+                   <input  class="form-control" type="text" name="nombre" id="nombre" required maxlength="50"> 
                    <div class="invalid-feedback">Ingrese Nombre.</div> 
                   </div>
                 </div>
@@ -64,26 +57,29 @@
                 <div class="form-group row">
                   <label for="apellido" class="col-form-label col-sm-3">Apellido:</label>
                     <div class="col-sm-7">
-                     <input class="form-control" type="text" name="apellido" id="apellido" required> <div class="invalid-feedback">Ingrese Apellido.</div> 
+                     <input class="form-control" type="text" name="apellido" id="apellido" required maxlength="50"> <div class="invalid-feedback">Ingrese Apellido.</div> 
                     </div>
                 </div>
+                
                 <div class="form-group row">
                   <label for="email" class="col-form-label col-sm-3">Email:</label>
                     <div class="col-sm-7">
-                     <input class="form-control" type="email" name="email" id="email" required> 
+                     <input class="form-control" type="email" name="email" id="email" required maxlength="300"> 
                       <div class="invalid-feedback">Ingrese Email Correctamente.</div> 
                     </div>
                 </div>
+                
                 <div class="form-group row">
                   <label for="contra" class="col-form-label col-sm-3">Contraseña:</label>
                     <div class="col-sm-7">
                      <input class="form-control" type="password" name="contra" id="contra" required minlength="6">  <div class="invalid-feedback">Ingrese Contraseña, minimo 6 caracteres.</div> 
                     </div>
                 </div>                
+                
                 <div class="form-group row">
                   <label for="direccion" class="col-form-label col-sm-3">Dirección:</label>
                   <div class="col-sm-7">
-                    <textarea class="form-control" name="direccion" id="direccion" cols="30" rows="3" required></textarea>  
+                    <textarea class="form-control" name="direccion" id="direccion" cols="30" rows="3" required maxlength="1000"></textarea>  
                      <div class="invalid-feedback">Ingrese Dirección.</div> 
                   </div>
                 </div>

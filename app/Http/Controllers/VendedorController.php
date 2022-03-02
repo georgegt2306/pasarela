@@ -6,19 +6,41 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use App\Models\User;
+use App\Models\Local;
+use App\Models\Vend_local;
 use Validator;
 use Input;
 
 class VendedorController extends Controller
 {
-    public function index(){
-    return view('Vendedor.index');
+   public function index(){
+      $userid = \Auth::id();
+      $local_per= Local::where("id_supervisor", $userid)
+                  ->select("id")
+                  ->whereNull("deleted_at")
+                  ->count();
+      
+
+      if ($local_per==0) {
+        return back()->with('error', 'Supervisor no tiene Local');
+      }else{
+         return view('Vendedor.index');
+      }
+
+    
    }
 
    public function consulta_data(){
+      $userid = \Auth::id();
+      $local_per= Local::where("id_supervisor", $userid)
+                  ->select("id")
+                  ->whereNull("deleted_at")
+                  ->first();
 
-      $result=User::where('id_tipo','3')
-            ->whereNull('deleted_at')
+      $result=User::join('vend_local', 'user.id','=','vend_local.id_vendedor')
+            ->select("user.*", "vend_local.id_local as local")
+            ->where('vend_local.id_local', $local_per->id)
+            ->whereNull('user.deleted_at')
             ->orderBy('id')
             ->get();
       
@@ -55,33 +77,40 @@ class VendedorController extends Controller
 
    public function store(Request $request){
       $userid = \Auth::id();
+      $local_per= Local::where("id_supervisor", $userid)
+                  ->select("id")
+                  ->whereNull("deleted_at")
+                  ->first();
+
 
       $v = Validator::make($request->all(),[
         'email'=>"required|unique:user,email",
       ]);
+
       if($v->fails()){
          $mensajedereturn=strtoupper($v->errors()->first('email'));
          return response()->json(["sms"=>false ,"mensaje" => $mensajedereturn]);     
       }
-      // $validator=User::where([['email','=',$request->email_sup],['id_tipo','=','2']])
-      //    ->whereNull('deleted_at')
-      //    ->count();
 
-      // if($validator==1){
-      //    return response()->json(["sms"=>false,"mensaje"=>"Email ya existe"]);
-      // }
 
       try {
          DB::beginTransaction();
-         User::create([
-            'id_tipo' => '3',
-            'ci_ruc' => $request->ci_ruc,
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'email' => $request->email,
-            'password' => Hash::make($request->contra),
-            'direccion' => $request->direccion,
-            'user_updated' => $userid,
+            
+         $id_vendedor=User::insertGetId([
+                        'id_tipo' => '3',
+                        'ci_ruc' => $request->ci_ruc,
+                        'nombre' => $request->nombre,
+                        'apellido' => $request->apellido,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->contra),
+                        'direccion' => $request->direccion,
+                        'user_updated' => $userid,
+                     ]);
+
+         Vend_local::create([
+            'id_local' => $local_per->id,
+            'id_vendedor' => $id_vendedor,
+            'user_updated' => $userid
          ]);
          DB::commit();
          
