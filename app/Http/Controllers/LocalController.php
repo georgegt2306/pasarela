@@ -197,11 +197,11 @@ class LocalController extends Controller
             $archivo->move('images/local', $request->idunic.'.png');
         } 
 
-        if($request->url != ''){
+        if($request->url_edit != ''){
           if(file_exists('images/local/'.$request->idunic.'.png')){
            unlink('images/local/'.$request->idunic.'.png'); 
-         } 
-            $path=$request->url;
+          } 
+            $path=$request->url_edit;
         }
 
         try {

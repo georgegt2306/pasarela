@@ -109,7 +109,7 @@
 
                 <input type="hidden" name="imagenanterior" id="imagenanterior" value="{{$result_edit->url_image}}">
 
-                <input type="hidden" name="validar" id="validar" value="">
+                <input type="hidden" name="validar_edit" id="validar_edit" value="">
             </div>
 
     </div>
@@ -248,15 +248,15 @@
     });
 
     function mostrarUrl(){
-        var infourl = $("#url").val();
+        var infourl = $("#url_edit").val();
         $('#imagePreviewUrl_edit').html("<img src='"+infourl+"' width='150' heigth='150' onerror=errorurl(); >");
-        $("#validar").val('correcto');
+        $("#validar_edit").val('correcto');
     }
 
     function errorurl(){
      $('#imagePreviewUrl_edit').html("<b style='color:red;'>Imagen no encontrada</b>");
-     $("#url").val('');
-     $("#validar").val('incorrecto');
+     $("#url_edit").val('');
+     $("#validar_edit").val('incorrecto');
     }
     
 
