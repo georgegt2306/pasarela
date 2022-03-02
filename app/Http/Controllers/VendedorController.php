@@ -14,20 +14,8 @@ use Input;
 class VendedorController extends Controller
 {
    public function index(){
-      $userid = \Auth::id();
-      $local_per= Local::where("id_supervisor", $userid)
-                  ->select("id")
-                  ->whereNull("deleted_at")
-                  ->count();
-      
+      return view('Vendedor.index');
 
-      if ($local_per==0) {
-        return back()->with('error', 'Supervisor no tiene Local');
-      }else{
-         return view('Vendedor.index');
-      }
-
-    
    }
 
    public function consulta_data(){
