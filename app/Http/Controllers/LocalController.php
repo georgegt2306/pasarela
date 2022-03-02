@@ -66,7 +66,7 @@ class LocalController extends Controller
 
          $error="'".asset('images/local.png')."'";
 
-         $imagen='<img src="'.$res->url_image.'" width="50" heigth="50" onerror="this.src='.$error.'" >';
+         $imagen='<img src="'.$res->url_image.'" width="50" height="50" onerror="this.src='.$error.'" >';
    
          $button= $boton_up.''.$boton_elim;
 
@@ -80,9 +80,8 @@ class LocalController extends Controller
 
     public function store(Request $request){
         $userid = \Auth::id();
-
         $v = Validator::make($request->all(),[
-              'ruc'=>"required|unique:.local,ruc",
+              'ruc'=>"required|unique:local,ruc",
             ]);
 
 
@@ -91,7 +90,14 @@ class LocalController extends Controller
 
           return response()->json(["sms"=>false ,"mensaje" => $mensajedereturn]);     
         }
+    
+        $local= Local::where('id_supervisor', $request->superv)
+                    ->whereNull('deleted_at')
+                    ->count();
 
+         if($local==1){
+            return response()->json(["sms"=>false ,"mensaje" => "Supervisor ya tiene local"]);
+         }  
 
         try {
             DB::beginTransaction();
@@ -115,30 +121,150 @@ class LocalController extends Controller
             
             $id2=$id.'.png';
 
-                if($archivo=$request->file('file')){
-                    $path= asset('images/local/'.$id2);
-                    $archivo->move('images/local', $id2);
-                }
+            if($archivo=$request->file('file')){
+                $path= asset('images/local/'.$id2);
+                $archivo->move('images/local', $id2);
+            }
 
-                else{
-                    $path=$request->url;
-                }
+            else{
+                $path=$request->url;
+            }
 
-               Local::where('id', $id)
-                  ->update(['url_image' => $path==null?'':$path]);
+            Local::where('id', $id)
+              ->update(['url_image' => $path==null?'':$path]);
 
 
-               DB::commit();
+            DB::commit();
                 
-                return response()->json(["sms"=>true,"mensaje"=>"Se creo correctamente"]);                    
+            return response()->json(["sms"=>true,"mensaje"=>"Se creo correctamente"]);                    
+        }catch(\Exception $e){
 
-              }catch(\Exception $e) 
-              {
-                DB::rollBack();
-                return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
-              }
-        
+            DB::rollBack();
+            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+        }
+    }
+    public function edit($id){
+        $result_edit=Local::where('id',$id)->first();
+        $supervisor= User::where('id_tipo','2')
+                  ->select('id', 'nombre')
+                  ->whereNull('deleted_at')
+                  ->get();
+
+        $lisup_edit=[];
+        foreach ($supervisor as $sup) {
+        $local= Local::where('id_supervisor', $sup->id)
+                ->select('id_supervisor')
+                ->whereNull('deleted_at')
+                ->count();
+
+        if ($sup->id == $result_edit->id_supervisor) {
+             array_push($lisup_edit, [$sup->id, $sup->nombre]);
+        }
+
+         if($local!=1){
+            array_push($lisup_edit, [$sup->id, $sup->nombre]);
+         }     
+
+        }      
+       
+      return view('Local.edit', compact('result_edit','lisup_edit'));
     }
 
+    public function update(Request $request){
+        $userid = \Auth::id(); 
+        $path=$request->imagenanterior;
 
+
+        if ($request->id_anterior != $request->superv_edit) {
+            $local= Local::where('id_supervisor', $request->superv_edit)
+                        ->whereNull('deleted_at')
+                        ->count();
+
+            if($local==1){
+                return response()->json(["sms"=>false ,"mensaje" => "Supervisor ya tiene local"]);
+            }   
+        }
+       
+        
+        if($archivo=$request->file('imagen_edit')){
+          if(file_exists('images/local/'.$request->idunic.'.png')){
+            unlink('images/local/'.$request->idunic.'.png'); 
+          } 
+            $path= asset('images/local/'.$request->idunic.'.png');
+            $archivo->move('images/local', $request->idunic.'.png');
+        } 
+
+        if($request->url != ''){
+          if(file_exists('images/local/'.$request->idunic.'.png')){
+           unlink('images/local/'.$request->idunic.'.png'); 
+         } 
+            $path=$request->url;
+        }
+
+        try {
+          DB::beginTransaction();
+         
+          $cons_insp_cab= DB::table('local')
+          ->where('id', '=', $request->idunic)
+          ->update(['updated_at' =>now(), 
+                    'id_supervisor'=>$request->superv_edit,
+                    'nombre'=>$request->nombre_edit,
+                    'direccion'=>$request->direccion_edit,
+                    'telefono'=>$request->telefono_edit,
+                    'descripcion'=>$request->descripcion_edit,
+                    'latitud'=>$request->latitud_edit,
+                    'longitud'=>$request->longitud_edit,
+                    'url_image' =>$path==null?'':$path,
+                    'id_admin' => $userid,
+                    'user_updated' => $userid]);
+
+            DB::commit();
+                
+            return response()->json(["sms"=>true,"mensaje"=>"Se edito correctamente"]);                
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+        }
+    }
+    public function destroy($id){
+      $userid = \Auth::id();
+
+               $tien_vend= DB::table("vend_local")
+                            ->where("id_local", $id)
+                            ->whereNull('deleted_at')
+                            ->count();
+
+               $tien_pro= DB::table("producto")
+                            ->where("id_local",$id)
+                            ->whereNull('deleted_at')
+                            ->count();
+         if($tien_vend>0){
+            return response()->json(["sms"=>false ,"mensaje" => "Este local cuenta con vendedores activos"]);
+         }  
+         if($tien_pro>0){
+            return response()->json(["sms"=>false ,"mensaje" => "Este local cuenta con prodcutos activos"]);
+         }  
+
+
+      try 
+          {
+          DB::beginTransaction();
+
+            Local::where('id', $id)->update([
+               'updated_at' =>now(),
+               'deleted_at' =>now(),
+               'user_updated' => $userid
+            ]);
+
+       DB::commit();
+        
+        return response()->json(["sms"=>true,"mensaje"=>"Se elimino correctamente"]);
+
+      }catch(\Exception $e) 
+      {
+        DB::rollBack();
+        return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+      }
+    }
 }

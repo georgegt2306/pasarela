@@ -39,6 +39,6 @@ Route::get('supervisor/consultar','SupervisorController@consulta_data')->middlew
 Route::resource('/local','LocalController')->except('show')->middleware('auth.admin');
 Route::get('local/consultar','LocalController@consulta_data')->middleware('auth.admin');
 
-
-
+Route::resource('/vendedor','VendedorController')->except('show')->middleware('sup.admin');
+Route::get('vendedor/consultar','VendedorController@consulta_data')->middleware('sup.admin');
 

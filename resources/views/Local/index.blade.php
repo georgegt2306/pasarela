@@ -7,6 +7,10 @@
     width: 100%;
 }
 
+#mapid_edit {
+    height: 300px;
+    width: 100%;
+}
 .pac-container {
     z-index: 1051 !important;
 }
@@ -56,26 +60,14 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-                <div class="form-group row">
-                  <label for="superv" class="col-form-label col-sm-3">Dueño:</label>
-                  <div class="col-sm-8">
-                    <select id="superv" name="superv" class="form-control"  style="width:100%">
-                       @for($i=0;$i<sizeof($lisup);$i++)
-                          <option value="{{$lisup[$i][0]}}">{{$lisup[$i][1]}}</option> 
-                       @endfor                     
-                    </select>
-                   
-                  </div>
-                </div>                  
+            <div class="modal-body">            
            
                 <div class="form-group row">
                   <label for="ruc" class="col-form-label col-sm-3">RUC:</label>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc" maxlength="100">
+                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc" required maxlength="100">
                   </div>
-                </div>
-
+                </div>                
                 <div class="form-group row">
                   <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-8">
@@ -84,21 +76,35 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label for="superv" class="col-form-label col-sm-3">Supervisor:</label>
+                  <div class="col-sm-8">
+                    <select id="superv" name="superv" class="form-control"  style="width:100%">
+                       @for($i=0;$i<sizeof($lisup);$i++)
+                          <option value="{{$lisup[$i][0]}}">{{$lisup[$i][1]}}</option> 
+                       @endfor                     
+                    </select>
+                  </div>
+                </div>    
+
+                <div class="form-group row">
                   <label for="descripcion" class="col-form-label col-sm-3">Descripción:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion" id="descripcion" maxlength="100">
+                      <input class="form-control" type="text"  placeholder="Descripción" name="descripcion" id="descripcion" required  maxlength="100">
                   </div>
+                   <div class="invalid-feedback">Ingrese Descripción.</div> 
                 </div>
                 <div class="form-group row">
                     <label for="telefono" class="col-form-label col-sm-3">Teléfono:</label>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="Teléfono" name="telefono" id="telefono" maxlength="1000">
+                            <input class="form-control" type="text" placeholder="Teléfono" name="telefono" id="telefono" maxlength="10" onkeypress="return justNumbers(event);" required>
                         </div>
+                        <div class="invalid-feedback">Ingrese teléfono.</div> 
                 </div>                
                 <div class="form-group row">
                   <label for="direccion" class="col-form-label col-sm-3">Dirección:</label>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" placeholder="Dirección" name="direccion" id="direccion" maxlength="1000">
+                    <input class="form-control" type="text" placeholder="Dirección" name="direccion" id="direccion" maxlength="1000" required>
+                    <div class="invalid-feedback">Ingrese direccion.</div> 
                   </div>
                 </div>
 
@@ -108,7 +114,7 @@
                   <div class="d-flex justify-content-center">
                     <div class="col-md-10" >
                       
-                        <input type="text" name="autocomplete" id="autocomplete" class="form-control">
+                        <input type="text" name="autocomplete" id="autocomplete" class="form-control" />
                         <div id="mapid"></div>
                      
                     </div>
@@ -204,10 +210,12 @@ class Localizacion{
 
         $('#latitud').val(ubicacion.latitude);
         $('#longitud').val(ubicacion.longitude);
+
   const options = {
+    mapTypeControl: true,
     center:myLatLng,
     zoom: 18,
-    gestureHandling: 'greedy'
+    gestureHandling: 'greedy',
   }
 
   var map= document.getElementById('mapid');
@@ -288,12 +296,6 @@ class Localizacion{
 });
 
 
-
-
-
-
-
-
     function consultar_tabla(){  
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
 
@@ -318,6 +320,10 @@ class Localizacion{
                         "previous": "Previo"
                     },
                 },
+                columnDefs: [
+                  { width: 40, targets: 0 },
+                  { width: 80, targets: 1 }
+                ],
                 "responsive": true,
                 columns:data.titulos,
                 data:data.sms
@@ -436,8 +442,9 @@ class Localizacion{
     function mostrarmodal(id){
         cursor_wait();
         $('button[name=editar]').attr('disabled',true);
-        $("#vistamodal_edit").load("{{asset('')}}supervisor/"+id+"/edit");
+        $("#vistamodal_edit").load("{{asset('')}}local/"+id+"/edit");
     }
+
 
     function elim(id){
       Swal.fire({
@@ -453,7 +460,7 @@ class Localizacion{
       }).then((result) => {
         if (result.value) {
             $.ajax({
-            url:"{{asset('')}}supervisor/"+id,
+            url:"{{asset('')}}local/"+id,
             headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'DELETE',
             dataType: 'json',
@@ -464,7 +471,7 @@ class Localizacion{
               }else{
                  Swal.fire({
                   closeOnClickOutside:false,
-                  title: "Error al Eliminar",
+                  title: res.mensaje,
                   icon: "error",
                   confirmButtonColor: '#3085d6',
                   confirmButtonText: 'OK',
@@ -473,10 +480,8 @@ class Localizacion{
             }
           })   
             }
-        })
-      }
-
-
+      })
+    }
 
   </script>
 

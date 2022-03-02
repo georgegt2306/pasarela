@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card">
               <div class="card-header">
-                <h2 class="card-title">Supervisores</h2>
+                <h2 class="card-title">Vendedores</h2>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -32,7 +32,7 @@
  <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
-            <form class="needs-validation" id="crear_supervisor" autocomplete="off" novalidate>
+            <form class="needs-validation" id="crear_vendedores" autocomplete="off" novalidate>
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Nuevo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -117,12 +117,12 @@
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
 
 
-         var qw = '<table id="Supervisores" class="table display responsive table-bordered table-striped" style="width:100%">';  
+         var qw = '<table id="Vendedores" class="table display responsive table-bordered table-striped" style="width:100%">';  
       
         cursor_wait();
-        $.get("{{asset('')}}supervisor/consultar").then((data)=> {
+        $.get("{{asset('')}}vendedor/consultar").then((data)=> {
             $('#contenedor_principal').html(qw);
-            $("#Supervisores").DataTable({
+            $("#Vendedores").DataTable({
                 "lengthMenu": [[ 100,50,20], [100,50,20]],
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ Registros",
@@ -138,10 +138,7 @@
                         "previous": "Previo"
                     },
                 },
-                 columnDefs: [
-                  { width: 40, targets: 0 },
-                  { width: 80, targets: 1 }
-                ],
+                select: true,
                 "responsive": true,
                 columns:data.titulos,
                 data:data.sms
@@ -151,7 +148,7 @@
       }
     consultar_tabla();
 
-    var form=document.getElementById('crear_supervisor');
+    var form=document.getElementById('crear_vendedores');
     
     form.addEventListener('submit', (event) => {
      event.preventDefault();
@@ -160,7 +157,7 @@
       }else {
         const crear_sup = new FormData(form); 
             $.ajax({
-                url:"{{asset('')}}supervisor",
+                url:"{{asset('')}}vendedor",
                 headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: 'POST',
                 dataType: 'json',
@@ -199,7 +196,7 @@
     function mostrarmodal(id){
         cursor_wait();
         $('button[name=editar]').attr('disabled',true);
-        $("#vistamodal_edit").load("{{asset('')}}supervisor/"+id+"/edit");
+        $("#vistamodal_edit").load("{{asset('')}}vendedores/"+id+"/edit");
     }
 
     function elim(id){
@@ -216,7 +213,7 @@
       }).then((result) => {
         if (result.value) {
             $.ajax({
-            url:"{{asset('')}}supervisor/"+id,
+            url:"{{asset('')}}vendedores/"+id,
             headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'DELETE',
             dataType: 'json',
@@ -236,8 +233,8 @@
             }
           })   
             }
-      })
-    }
+        })
+  }
 
 
 

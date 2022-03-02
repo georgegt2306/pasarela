@@ -48,7 +48,7 @@
               </li>
            @elseif(auth()->user()->id_tipo==2)
               <li class="nav-item">
-                <a href="{{asset('/doctor')}}" class="nav-link">
+                <a href="{{asset('/vendedor')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Vendedores</p>
                 </a>

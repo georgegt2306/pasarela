@@ -9,16 +9,15 @@ use App\Models\User;
 use Validator;
 use Input;
 
-
-class SupervisorController extends Controller
+class VendedorController extends Controller
 {
-   public function index(){
-    return view('Supervisor.index');
+    public function index(){
+    return view('Vendedor.index');
    }
 
    public function consulta_data(){
 
-      $result=User::where('id_tipo','2')
+      $result=User::where('id_tipo','3')
             ->whereNull('deleted_at')
             ->orderBy('id')
             ->get();
@@ -44,7 +43,7 @@ class SupervisorController extends Controller
    
          $button= $boton_up.''.$boton_elim;
 
-         $imagen='<img src="'.asset('dist/img/user.png').'" width="30" height="30">';
+         $imagen='<img src="'.asset('dist/img/user.png').'" width="30" heigth="30">';
 
          $jsonenvtemp = [$imagen,$button,$res->ci_ruc,$res->nombre,$res->apellido,$res->email,$res->direccion];
 
@@ -75,7 +74,7 @@ class SupervisorController extends Controller
       try {
          DB::beginTransaction();
          User::create([
-            'id_tipo' => '2',
+            'id_tipo' => '3',
             'ci_ruc' => $request->ci_ruc,
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
@@ -97,7 +96,7 @@ class SupervisorController extends Controller
    public function edit($id){
       $result_edit=User::where('id',$id)->first();
 
-      return view('Supervisor.edit', compact('result_edit','id'));
+      return view('Vendedor.edit', compact('result_edit','id'));
    }
 
    public function update($id){

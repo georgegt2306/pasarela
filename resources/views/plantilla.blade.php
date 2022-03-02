@@ -38,7 +38,7 @@
     <script src="{{ asset('/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
     <script src="{{ asset('/plugins/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('/plugins/jquery-validation/additional-methods.min.js')}}"></script>
+
     <script src="{{asset('/plugins/sweetalert2.js')}}"></script>
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
