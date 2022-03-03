@@ -1,13 +1,6 @@
 @extends('plantilla')
 @section('content')
 
-@if(session()->has('error'))
-    <div class="alert alert-danger">
-        {{ session()->get('error') }}
-    </div>
-@endif
-
-
 <section class="content" style="margin-top: 15px;">
     <div class="row"> 
         <div class="col-md-12">
@@ -112,7 +105,7 @@
   <script type="text/javascript">
 
   function consultar_tabla(){  
-    $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='200'  height='200' /></div>");
+    $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='300' height='200' /></div>");
 
     var qw = '<table id="Vendedores" class="table display responsive table-bordered table-striped" style="width:100%">';  
       

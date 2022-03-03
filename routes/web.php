@@ -44,6 +44,7 @@ Route::get('vendedor/consultar','VendedorController@consulta_data')->middleware(
 
 Route::resource('/producto','ProductoController')->except('show')->middleware('sup.admin');
 Route::get('producto/consultar','ProductoController@consulta_data')->middleware('sup.admin');
+Route::get('producto/info/{id}','ProductoController@consultar')->middleware('sup.admin');
 
 Route::resource('/promociones','PromocionesController')->except('show')->middleware('sup.admin');
 Route::get('promociones/consultar','PromocionesController@consulta_data')->middleware('sup.admin');

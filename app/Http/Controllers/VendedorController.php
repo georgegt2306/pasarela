@@ -65,6 +65,7 @@ class VendedorController extends Controller
 
    public function store(Request $request){
       $userid = \Auth::id();
+
       $local_per= Local::where("id_supervisor", $userid)
                   ->select("id")
                   ->whereNull("deleted_at")
@@ -140,7 +141,7 @@ class VendedorController extends Controller
       $userid = \Auth::id();
       try 
           {
-          DB::beginTransaction();
+            DB::beginTransaction();
 
             User::where('id', $id)->update([
                'updated_at' =>now(),
