@@ -207,8 +207,7 @@ class LocalController extends Controller
         try {
           DB::beginTransaction();
          
-          $cons_insp_cab= DB::table('local')
-          ->where('id', '=', $request->idunic)
+          $cons_insp_cab= Local::where('id', '=', $request->idunic)
           ->update(['updated_at' =>now(), 
                     'id_supervisor'=>$request->superv_edit,
                     'nombre'=>$request->nombre_edit,

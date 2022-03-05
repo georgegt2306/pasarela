@@ -103,7 +103,13 @@
 <script src="{{ asset('/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('/dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('/plugins/sweetalert2.js')}}"></script>
+<script type="text/javascript">
+  
+  function recuperarcon(){
+    
+  }
 
+</script>
 
 </body>
 </html>

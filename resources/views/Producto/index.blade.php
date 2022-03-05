@@ -44,9 +44,9 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">            
-           
             
+            <div class="modal-body">               
+                
                 <div class="form-group row">
                   <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-8">
@@ -54,6 +54,7 @@
                       <div class="invalid-feedback">Ingrese Nombre.</div> 
                   </div>
                 </div>
+
                 <div class="form-group row">
                   <label for="descripcion" class="col-form-label col-sm-3">Descripción:</label>
                   <div class="col-sm-8">
@@ -64,22 +65,23 @@
 
                 <div class="form-group row">
                   <label for="categoria" class="col-form-label col-sm-3">Categoría:</label>
-                  <div class="col-sm-8">
-                    <select id="categoria" name="categoria" class="form-control"  style="width:100%">
-                       @foreach($categoria as $categ)
-                          <option value="{{$categ->id}}">{{$categ->nombre}}</option> 
-                       @endforeach                     
-                    </select>
-                  </div>
+                    <div class="col-sm-8">
+                      <select id="categoria" name="categoria" class="form-control"  style="width:100%">
+                         @foreach($categoria as $categ)
+                            <option value="{{$categ->id}}">{{$categ->nombre}}</option> 
+                         @endforeach                     
+                      </select>
+                    </div>
                 </div>  
 
                 <div class="form-group row">
                     <label for="costo" class="col-form-label col-sm-3">Costo:</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="number" placeholder="Costo" name="costo" id="costo" required maxlength="19,4">
+                        <input class="form-control" type="number"  step="0.01" placeholder="Costo" name="costo" id="costo" required maxlength="10,2">
                         <div class="invalid-feedback">Ingrese Costo.</div> 
                     </div>     
-                </div>                
+                </div>
+
                 <div class="form-group row">
                   <label for="precio" class="col-form-label col-sm-3">Precio:</label>
                   <div class="col-sm-8">
@@ -87,13 +89,16 @@
                     <div class="invalid-feedback">Ingrese Precio.</div> 
                   </div>
                 </div>
+
                 <div class="form-group row">
                   <label for="unidad" class="col-form-label col-sm-3">Unidad:</label>
                   <div class="col-sm-8">
                       <input class="form-control" type="text" placeholder="Unidad" name="unidad" id="unidad" required maxlength="45">
-                    <div class="invalid-feedback">Ingrese Unidad.</div> 
+
+                      <div class="invalid-feedback">Ingrese Unidad.</div> 
                   </div>
                 </div>
+
                 <div class="form-group row">
                   <label for="existencia" class="col-form-label col-sm-3">Existencia:</label>
                   <div class="col-sm-8">
@@ -111,15 +116,15 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="iva" class="col-form-label col-sm-3">Iva:</label>
-                  <div class="col-sm-8">
+                    <label for="iva" class="col-form-label col-sm-3">Iva:</label>
+                    <div class="col-sm-8">
                       <input class="form-control" type="number" placeholder="Iva" name="iva" id="iva" required maxlength="10,2">
-                    <div class="invalid-feedback">Ingrese Iva.</div> 
-                  </div>
+                      <div class="invalid-feedback">Ingrese Iva.</div> 
+                    </div>
                 </div>
 
                 <div class="form-group row">
-                      <label for="nombre" class="col-form-label col-sm-3">Seleccione:</label>
+                    <label for="nombre" class="col-form-label col-sm-3">Seleccione:</label>
                     <div class="col-sm-4">
                         <input type="checkbox" value="1" id="1"  /> Imagen<br/>
                         <input type="checkbox" value="2"  id="2" /> Url <br/>
@@ -127,34 +132,33 @@
                 </div>
 
                 <div id="habilitar_imagen" style="display: none;">             
-                <div class="form-group row">
-                    <label for="nombre" class="col-form-label col-sm-3">Imagen:</label>
-                  <div class="col-sm-4">
-                    <label for="file" class="btn btn-info"> <i class="fas fa-upload"></i></label>
-                    <input type="file" name="file" id="file" style='display: none;' accept="image/*" />
+                  <div class="form-group row">
+                      <label for="nombre" class="col-form-label col-sm-3">Imagen:</label>
+                      <div class="col-sm-4">
+                        <label for="file" class="btn btn-info"> <i class="fas fa-upload"></i></label>
+                        <input type="file" name="file" id="file" style='display: none;' accept="image/*" />
+                      </div>
+                      <div class="col-sm-4" id="imagePreview">
+                      
+                      </div>
                   </div>
-                    <div class="col-sm-4" id="imagePreview">
-                    
-                    </div>
-                </div>
                 </div> 
 
                 <input type="hidden" name="validar" id="validar" value="">
-                  
-                 <div id="habilitar_url" style="display: none;">
-                 <div class="form-group row">
-                  <label for="url" class="col-form-label col-sm-3">Url:</label>
-                  <div class="col-sm-8 input-group mb-3">
-                  <input class="form-control" type="text" name="url" id="url" placeholder="URL"  maxlength="1000" >
-                  <div class="input-group-append" >
-                    <span class="input-group-text" onclick="mostrarUrl();" style="cursor:pointer;"><i class="fas fa-check"></i></span>
-                  </div> 
-                  </div>
-                   <div class="col-sm-12" id="imagePreviewUrl" align="center">
-                      
+                  <div id="habilitar_url" style="display: none;">
+                    <div class="form-group row">
+                      <label for="url" class="col-form-label col-sm-3">Url:</label>
+                        <div class="col-sm-8 input-group mb-3">
+                          <input class="form-control" type="text" name="url" id="url" placeholder="URL"  maxlength="1000" >
+                            <div class="input-group-append" >
+                              <span class="input-group-text" onclick="mostrarUrl();" style="cursor:pointer;"><i class="fas fa-check"></i></span>
+                            </div> 
+                        </div>
+                        <div class="col-sm-12" id="imagePreviewUrl" align="center">
+                          
+                        </div>
                     </div>
-                 </div>
-                 </div> 
+                  </div> 
 
 
               
@@ -223,10 +227,10 @@
                 "responsive": true,
                 columns:data.titulos,
                 data:data.sms
-            });
+              });
                      remove_cursor_wait();
-        });
-    }
+            });
+        }
 
     consultar_tabla();
 

@@ -11,6 +11,7 @@
             <div class="col-md-12">
 
 <input class="form-control" type="hidden" name="idunic" id="idunic" readonly="readonly"  value="{{$result_edit->id}}">
+
 <input class="form-control" type="hidden" name="id_anterior" id="id_anterior" readonly="readonly"  value="{{$result_edit->id_supervisor}}">
 
                 <div class="form-group row">
@@ -24,7 +25,7 @@
                 <div class="form-group row">
                   <label for="superv_edit" class="col-form-label col-sm-3">Supervisor:</label>
                   <div class="col-sm-8">
-                    <select id="superv_edit" name="superv_edit" class="form-control select2"  style="width:100%" value="{{$result_edit->id_supervisor}}">
+                    <select id="superv_edit" name="superv_edit" class="form-control select2"  style="width:100%" >
                        @for($j=0;$j<sizeof($lisup_edit);$j++)
                           <option value="{{$lisup_edit[$j][0]}}">{{$lisup_edit[$j][1]}}</option> 
                        @endfor                     
@@ -121,7 +122,10 @@
 
 <script type="text/javascript">
 
-    $('#superv_edit').select2({
+
+
+    $('#superv_edit').val({{$result_edit->id_supervisor}});
+        $('#superv_edit').select2({
       theme: 'bootstrap4'
     })
     remove_cursor_wait();

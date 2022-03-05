@@ -29,7 +29,7 @@
 			<div class="col-md-4" id="divPadre" >
 				 <div class="form-group row">
                    
-				     <img src="{{$trae_prod->url_imagen}}" alt="imagen_pro" id="imagencons" width="200" height="200"  style="border: 2px black solid;" >
+				     <img src="{{$trae_prod->url_imagen}}" alt="imagen_pro" id="imagencons" width="200" height="200"  style="border: 2px black solid;" onerror="this.src=¨{{asset('images/producto.png')}}" >
 				    </div>
 			</div>	
             <div class="col-md-7">
@@ -42,7 +42,7 @@
                 <div class="form-group row">
                   <label for="descripcion" class="col-form-label col-sm-4">Descripción:</label>
                   <div class="col-sm-8">
-                      <textarea class="form-control" cols="30" rows="3" disabled style="resize: none">{{$trae_prod->descripcion}}</textarea>
+                      <textarea class="form-control"  rows="3" disabled >{{$trae_prod->descripcion}}</textarea>
                   </div>
                 </div>
 

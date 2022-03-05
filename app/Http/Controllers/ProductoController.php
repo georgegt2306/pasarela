@@ -99,8 +99,8 @@ class ProductoController extends Controller
             $id2=$id.'.png';
 
             if($archivo=$request->file('file')){
-                $path= asset('images/prodcutos/'.$id2);
-                $archivo->move('images/prodcutos', $id2);
+                $path= asset('images/productos/'.$id2);
+                $archivo->move('images/productos', $id2);
             }
 
             else{
@@ -127,6 +127,58 @@ class ProductoController extends Controller
                           ->where('producto.id', $id)->first();
 
        return view("Producto.consultar", compact('trae_prod'));
+    }
+
+    public function edit($id){
+        $result_edit=Producto::where('id',$id)->first();      
+       
+        return view('Producto.edit', compact('result_edit'));
+    }
+
+    public function update(Request $request){
+        $userid = \Auth::id(); 
+        $path=$request->imagenanterior;
+
+        if($archivo=$request->file('imagen_edit')){
+            if(file_exists('images/productos/'.$request->idunic.'.png')){
+                unlink('images/productos/'.$request->idunic.'.png'); 
+            } 
+            $path= asset('images/productos/'.$request->idunic.'.png');
+            $archivo->move('images/productos', $request->idunic.'.png');
+        } 
+
+        if($request->url_edit != ''){
+            if(file_exists('images/productos/'.$request->idunic.'.png')){
+                unlink('images/productos/'.$request->idunic.'.png'); 
+            } 
+            $path=$request->url_edit;
+        }
+
+        try {
+          DB::beginTransaction();
+         
+          $cons_insp_cab= Producto::where('id', '=', $request->idunic)
+          ->update(['updated_at' =>now(), 
+              'nombre'=>$request->nombre_edit,
+              'descripcion'=>$request->descripcion_edit,
+              'costo'=>$request->costo_edit,
+              'precio'=>$request->precio_edit,
+              'unidad'=>$request->unidad_edit,
+              'existencia'=>$request->existencia_edit,
+              'descuento'=>$request->descuento_edit,
+              'tasa_iva'=>$request->iva_edit,
+              'url_imagen' =>$path==null?'':$path,
+              'updated_at' =>now(),
+              'user_updated' => $userid]);
+
+            DB::commit();
+                
+            return response()->json(["sms"=>true,"mensaje"=>"Se edito correctamente"]);                
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+        }
     }
 
 }
