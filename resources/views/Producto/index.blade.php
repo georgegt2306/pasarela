@@ -365,7 +365,7 @@
       }).then((result) => {
         if (result.value) {
             $.ajax({
-            url:"{{asset('')}}prodcuto/"+id,
+            url:"{{asset('')}}producto/"+id,
             headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'DELETE',
             dataType: 'json',

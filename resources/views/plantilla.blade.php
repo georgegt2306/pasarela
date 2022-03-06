@@ -14,14 +14,13 @@
     <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{ asset('/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/plugins/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css')}}">
     <link href="{{ asset('/plugins/ionicons.css')}}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.1/css/fixedHeader.dataTables.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
 <div class="wrapper">
@@ -43,9 +42,10 @@
     <script src="{{ asset('/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
     <script src="{{ asset('/plugins/select2/js/select2.full.min.js') }}"></script>
-
     <script src="{{asset('/plugins/sweetalert2.js')}}"></script>
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+    <script src="{{ asset('/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>

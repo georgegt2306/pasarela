@@ -48,3 +48,7 @@ Route::get('producto/info/{id}','ProductoController@consultar')->middleware('sup
 
 Route::resource('/promociones','PromocionesController')->except('show')->middleware('sup.admin');
 Route::get('promociones/consultar','PromocionesController@consulta_data')->middleware('sup.admin');
+
+Route::resource('/ventas','VentasController')->except('show')->middleware('sup.admin');
+Route::get('ventas/consultar/{vendedor}/{estado}/{fec1}/{fec2}/{checked}','VentasController@consulta_data')->middleware('sup.admin');
+Route::get('ventas/info/{id}','VentasController@consultar')->middleware('sup.admin');

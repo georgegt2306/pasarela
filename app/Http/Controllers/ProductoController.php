@@ -180,5 +180,26 @@ class ProductoController extends Controller
             return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
         }
     }
+    public function destroy($id){
+        $userid = \Auth::id(); 
+        try {
+
+            DB::beginTransaction();
+
+                Producto::where('id', $id)->update([
+                   'updated_at' =>now(),
+                   'deleted_at' =>now(),
+                   'user_updated' => $userid
+                ]);
+
+            DB::commit();
+        
+            return response()->json(["sms"=>true,"mensaje"=>"Se elimino correctamente"]);
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+      }
+    }
 
 }

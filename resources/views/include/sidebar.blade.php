@@ -64,7 +64,13 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Promociones</p>
                 </a>
-              </li> 
+              </li>
+              <li class="nav-item">
+                <a href="{{asset('/ventas')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ventas</p>
+                </a>
+              </li>  
             @endif           
             </ul>
           </li>

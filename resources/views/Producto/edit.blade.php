@@ -32,7 +32,7 @@
                 <div class="form-group row">
                     <label for="costo_edit" class="col-form-label col-sm-3">Costo:</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" name="costo_edit" id="costo_edit"  value="{{$result_edit->costo}}"   onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,10}([.]{1}?([0-9]{1,2})?)?" >
+                        <input class="form-control" type="text" name="costo_edit" id="costo_edit"  value="{{$result_edit->costo}}"   onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?" >
                       </div>
                     <div class="invalid-feedback">Ingrese Costo.</div>   
                 </div>
@@ -40,7 +40,7 @@
                 <div class="form-group row">
                     <label for="precio_edit" class="col-form-label col-sm-3">Precio:</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" name="precio_edit" id="precio_edit"  value="{{$result_edit->precio}}" onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,10}([.]{1}?([0-9]{1,2})?)?">
+                        <input class="form-control" type="text" name="precio_edit" id="precio_edit"  value="{{$result_edit->precio}}" onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?">
                       </div>
                     <div class="invalid-feedback">Ingrese Precio.</div>   
                 </div>
@@ -64,7 +64,7 @@
                 <div class="form-group row">
                   <label for="descuento_edit" class="col-form-label col-sm-3">Descuento:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Descuento" name="descuento_edit" id="descuento_edit" value="{{$result_edit->descuento}}" onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,10}([.]{1}?([0-9]{1,2})?)?">
+                      <input class="form-control" type="text" placeholder="Descuento" name="descuento_edit" id="descuento_edit" value="{{$result_edit->descuento}}" onkeypress="return Limitante2(event,this);" required pattern="[0-9]{1,2}([.]{1}?([0-9]{1,2})?)?">
                     <div class="invalid-feedback">Ingrese Descuento.</div> 
                   </div>
                 </div>
@@ -72,7 +72,7 @@
                 <div class="form-group row">
                     <label for="iva_edit" class="col-form-label col-sm-3">Iva:</label>
                     <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Iva" name="iva_edit" id="iva_edit" value="{{$result_edit->tasa_iva}}" onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,10}([.]{1}?([0-9]{1,2})?)?">
+                      <input class="form-control" type="text" placeholder="Iva" name="iva_edit" id="iva_edit" value="{{$result_edit->tasa_iva}}" onkeypress="return Limitante2(event,this);" required pattern="[0-9]{1,2}([.]{1}?([0-9]{1,2})?)?">
                       <div class="invalid-feedback">Ingrese Iva.</div> 
                     </div>
                 </div>
@@ -238,21 +238,17 @@
             var chark = String.fromCharCode(key);
             var tempValue = input.value + chark;
  
+
             if (key==46 || (key >= 48 && key <= 57)  ) {
                 if (filter(tempValue) === false) {
-                    console.log("error")
                     return false;
-                    
-                } else {
-                    console.log("error -")
+                } else {                  
                     return true;
                 }
             } else {
                 if (key == 8 || key == 13 || key == 0 || key == 188) {
-                    console.log("error 0")
                     return true;
                 }  else {
-                      console.log("error 2")
                     return false;
                 }
             }
@@ -260,7 +256,42 @@
 
 
         function filter(_val_) {
-            var regexp = /^[0-9]{1,10}([.]{1}?([0-9]{1,2})?)?$/;
+            var regexp = /^[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?$/;
+
+            if (regexp.test(_val_) === true) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+
+
+    function Limitante2(evt, input) {
+            var key = window.Event ? evt.which : evt.keyCode;
+            var chark = String.fromCharCode(key);
+            var tempValue = input.value + chark;
+ 
+ 
+            if (key==46 || (key >= 48 && key <= 57)  ) {
+                if (filter2(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                if (key == 8 || key == 13 || key == 0 || key == 188) {
+                    return true;
+                }  else {
+                    return false;
+                }
+            }
+        }
+
+
+        function filter2(_val_) {
+            var regexp = /^[0-9]{1,2}([.]{1}?([0-9]{1,2})?)?$/;
 
             if (regexp.test(_val_) === true) {
                 return true;
