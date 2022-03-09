@@ -7,7 +7,7 @@
         <div class="col-md-12">
           <div class="card">
               <div class="card-header">
-                <h2 class="card-title">Productos</h2>
+                <h2 class="card-title">Promociones</h2>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -37,7 +37,7 @@
  <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog" aria-labelledby="modalcreateTitle" aria-hidden="true"     data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
-            <form class="needs-validation" id="crear_prodcuto" autocomplete="off"  novalidate>
+            <form class="needs-validation" id="crear_promociones" autocomplete="off"  novalidate>
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Nuevo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -63,65 +63,16 @@
                   </div>
                 </div>
 
-                <div class="form-group row">
-                  <label for="categoria" class="col-form-label col-sm-3">Categoría:</label>
-                    <div class="col-sm-8">
-                      <select id="categoria" name="categoria" class="form-control"  style="width:100%">
-                         @foreach($categoria as $categ)
-                            <option value="{{$categ->id}}">{{$categ->nombre}}</option> 
-                         @endforeach                     
-                      </select>
-                    </div>
-                </div>  
-
-                <div class="form-group row">
-                    <label for="costo" class="col-form-label col-sm-3">Costo:</label>
-                    <div class="col-sm-8">
-                        <input class="form-control" type="text" placeholder="Costo" name="costo" id="costo" onkeypress="return Lim_index(event,this);" required pattern="[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?">
-                        <div class="invalid-feedback">Ingrese Costo.</div> 
-                    </div>     
-                </div>
-
+              
                 <div class="form-group row">
                   <label for="precio" class="col-form-label col-sm-3">Precio:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Precio" name="precio" id="precio" onkeypress="return Lim_index(event,this);" required pattern="[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?">
+                      <input class="form-control" type="number" placeholder="Precio" name="precio" id="precio" required maxlength="10,2">
                     <div class="invalid-feedback">Ingrese Precio.</div> 
                   </div>
                 </div>
 
-                <div class="form-group row">
-                  <label for="unidad" class="col-form-label col-sm-3">Unidad:</label>
-                  <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Unidad" name="unidad" id="unidad" required maxlength="45">
-
-                      <div class="invalid-feedback">Ingrese Unidad.</div> 
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="existencia" class="col-form-label col-sm-3">Existencia:</label>
-                  <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Existencia" name="existencia" id="existencia" required maxlength="11" onkeypress="return justNumbers(event);">
-                    <div class="invalid-feedback">Ingrese Existencia.</div> 
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="descuento" class="col-form-label col-sm-3">Descuento:</label>
-                  <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Descuento" name="descuento" id="descuento" onkeypress="return Lim_index2(event,this);" required pattern="[0-9]{1,2}([.]{1}?([0-9]{1,2})?)?">
-                    <div class="invalid-feedback">Ingrese Descuento.</div> 
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="iva" class="col-form-label col-sm-3">Iva:</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" type="text" placeholder="Iva" name="iva" id="iva" onkeypress="return Lim_index2(event,this);" required pattern="[0-9]{1,2}([.]{1}?([0-9]{1,2})?)?">
-                      <div class="invalid-feedback">Ingrese Iva.</div> 
-                    </div>
-                </div>
+                
 
                 <div class="form-group row">
                     <label for="nombre" class="col-form-label col-sm-3">Seleccione:</label>
@@ -173,12 +124,6 @@
       </div>
 
 
-      <div class="modal fade" id="modale_cons" tabindex="-1" role="dialog" aria-labelledby="modaleditTitle" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
-       <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-          <div class="modal-content" id="vistamodal_cons">               
-          </div>
-       </div>
-      </div>
 
       <div class="modal fade" id="modale" tabindex="-1" role="dialog" aria-labelledby="modaleditTitle" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -201,12 +146,12 @@
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='300'  height='200' /></div>");
 
 
-         var qw = '<table id="Producto" class="table display responsive table-bordered table-striped" style="width:100%">';  
+         var qw = '<table id="Promociones" class="table display responsive table-bordered table-striped" style="width:100%">';  
       
         cursor_wait();
-        $.get("{{asset('')}}producto/consultar").then((data)=> {
+        $.get("{{asset('')}}promociones/consultar").then((data)=> {
             $('#contenedor_principal').html(qw);
-            $("#Producto").DataTable({
+            $("#Promociones").DataTable({
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ Registros",
                     "zeroRecords": "No hay registros...",
@@ -292,7 +237,7 @@
 
 
 
-    var form=document.getElementById('crear_prodcuto');
+    var form=document.getElementById('crear_promociones');
     
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -301,7 +246,7 @@
       }else {
         const crear_sup = new FormData(form); 
             $.ajax({
-                url:"{{asset('')}}producto",
+                url:"{{asset('')}}promociones",
                 headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: 'POST',
                 dataType: 'json',
@@ -337,86 +282,13 @@
     }, false);
 
 
-    function mostrarconsul(id){
-        cursor_wait();
-        $('button[name=consultar]').attr('disabled',true);
-        $("#vistamodal_cons").load("{{asset('')}}producto/info/"+id);
-    }
 
 
     function mostrarmodal(id){
         cursor_wait();
         $('button[name=editar]').attr('disabled',true);
-        $("#vistamodal_edit").load("{{asset('')}}producto/"+id+"/edit");
+        $("#vistamodal_edit").load("{{asset('')}}promociones/"+id+"/edit");
     }
-
-    function Lim_index(evt, input) {
-            var key = window.Event ? evt.which : evt.keyCode;
-            var chark = String.fromCharCode(key);
-            var tempValue = input.value + chark;
- 
-
-            if (key==46 || (key >= 48 && key <= 57)  ) {
-                if (filter_index(tempValue) === false) {
-                    return false;
-                } else {                  
-                    return true;
-                }
-            } else {
-                if (key == 8 || key == 13 || key == 0 || key == 188) {
-                    return true;
-                }  else {
-                    return false;
-                }
-            }
-        }
-
-
-        function filter_index(_val_) {
-            var regexp = /^[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?$/;
-
-            if (regexp.test(_val_) === true) {
-                return true;
-            } else {
-                return false;
-            }
-
-        }
-
-
-
-    function Lim_index2(evt, input) {
-            var key = window.Event ? evt.which : evt.keyCode;
-            var chark = String.fromCharCode(key);
-            var tempValue = input.value + chark;
- 
- 
-            if (key==46 || (key >= 48 && key <= 57)  ) {
-                if (filter_index2(tempValue) === false) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                if (key == 8 || key == 13 || key == 0 || key == 188) {
-                    return true;
-                }  else {
-                    return false;
-                }
-            }
-        }
-
-
-        function filter_index2(_val_) {
-            var regexp = /^[0-9]{1,2}([.]{1}?([0-9]{1,2})?)?$/;
-
-            if (regexp.test(_val_) === true) {
-                return true;
-            } else {
-                return false;
-            }
-
-        }
 
 
     function elim(id){
@@ -433,7 +305,7 @@
       }).then((result) => {
         if (result.value) {
             $.ajax({
-            url:"{{asset('')}}producto/"+id,
+            url:"{{asset('')}}promociones/"+id,
             headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'DELETE',
             dataType: 'json',

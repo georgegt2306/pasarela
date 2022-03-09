@@ -85,7 +85,13 @@
           </div>
        </div>
       </div>
-
+      
+      <div class="modal fade" id="modale" tabindex="-1" role="dialog" aria-labelledby="modaleditTitle" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+       <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content" id="vistamodal_edit">               
+          </div>
+       </div>
+      </div>
 @stop
 @section('script')
 
@@ -153,6 +159,11 @@
         $('button[name=consultar_modal]').attr('disabled',true);
         $("#vistamodal_cons").load("{{asset('')}}ventas/info/"+id);
     }
+    function mostrarmodal(id){
+        cursor_wait();
+        $('button[name=editar]').attr('disabled',true);
+        $("#vistamodal_edit").load("{{asset('')}}ventas/"+id+"/edit");
+    }
 
     function Consultar(){
         var vendedor= $("#combovend").val();
@@ -188,7 +199,7 @@
                     },
                     columnDefs: [
                       { width: 40, targets: 0 },
-                      { width: 120, targets: 1 }
+                      { width: 130, targets: 1 }
                     ],
                     "responsive": true,
                     columns:data.titulos,

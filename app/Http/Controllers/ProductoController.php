@@ -168,7 +168,6 @@ class ProductoController extends Controller
               'descuento'=>$request->descuento_edit,
               'tasa_iva'=>$request->iva_edit,
               'url_imagen' =>$path==null?'':$path,
-              'updated_at' =>now(),
               'user_updated' => $userid]);
 
             DB::commit();

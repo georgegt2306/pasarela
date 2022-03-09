@@ -95,10 +95,38 @@ class VentasController extends Controller
        return response()->json(["sms"=> $jsonenv, "titulos"=>$titulos]);   
    }    
 
-   public function consultar($id){
+    public function consultar($id){
 
        $det_venta=Detalle_venta::where('id_venta', $id)->get();
 
        return view("Ventas.consultar", compact('det_venta'));
     }
+    public function edit($id){
+        $comboestado_edit=Estado::select('id','nombre')->get();
+        $result_edit=Ventas::where('id',$id)->select('id','id_estado','fecha')->first();      
+       
+        return view('Ventas.edit', compact('result_edit','comboestado_edit'));
+    }
+
+    public function update(Request $request){
+        $userid = \Auth::id(); 
+
+
+        try {
+          DB::beginTransaction();
+         
+          $cons_insp_cab= Ventas::where('id', '=', $request->idunic)
+          ->update(['id_estado'=>$request->estado_edit,
+              'user_updated' => $userid]);
+
+            DB::commit();
+                
+            return response()->json(["sms"=>true,"mensaje"=>"Se edito correctamente"]);               
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+        }
+    }
+
+
 }
