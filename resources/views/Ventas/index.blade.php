@@ -105,7 +105,7 @@
     $( document ).ready(function() {
         $('#fec3_rango').daterangepicker({
             drops: 'down',
-            opens: 'right'
+            opens: 'right',
             startDate: new Date(), 
             endDate: new Date(),
             "locale": {
@@ -213,6 +213,41 @@
     }
 
 
-
+    function elim(id){
+      Swal.fire({
+        closeOnClickOutside:false,
+        title: "Aviso !",
+        text: "Desea eliminar este registro ? ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.value) {
+            $.ajax({
+            url:"{{asset('')}}ventas/"+id,
+            headers :{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'DELETE',
+            dataType: 'json',
+            success:function(res){
+              if(res.sms){
+                  Consultar();
+                   toastr.success(res.mensaje); 
+              }else{
+                 Swal.fire({
+                  closeOnClickOutside:false,
+                  title: "Error al Eliminar",
+                  icon: "error",
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK',
+               });
+              }
+            }
+          })   
+            }
+        })
+  }
   </script>
 @endsection

@@ -40,7 +40,7 @@ class VentasController extends Controller
                   ->whereNull("deleted_at")
                   ->first();
 
-        $sQuery="SELECT * from ventas where id_local='".$local_per->id."'";
+        $sQuery="SELECT * from ventas where id_local='".$local_per->id."' and deleted_at is null";
 
     
 
@@ -99,7 +99,9 @@ class VentasController extends Controller
 
        $det_venta=Detalle_venta::where('id_venta', $id)->get();
 
-       return view("Ventas.consultar", compact('det_venta'));
+       $cab_venta=Ventas::where('id', $id)->first();
+
+       return view("Ventas.consultar", compact('det_venta','cab_venta'));
     }
     public function edit($id){
         $comboestado_edit=Estado::select('id','nombre')->get();
@@ -127,6 +129,27 @@ class VentasController extends Controller
             return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
         }
     }
+   public function destroy($id){
+      $userid = \Auth::id();
+      try 
+          {
+            DB::beginTransaction();
 
+            Ventas::where('id', $id)->update([
+               'updated_at' =>now(),
+               'deleted_at' =>now(),
+               'user_updated' => $userid
+            ]);
+
+       DB::commit();
+        
+        return response()->json(["sms"=>true,"mensaje"=>"Se elimino correctamente"]);
+
+      }catch(\Exception $e) 
+      {
+        DB::rollBack();
+        return response()->json(["sms"=>false,"mensaje"=>$e->getMessage()]);                 
+      }
+   }
 
 }
