@@ -23,4 +23,6 @@ return [
 
     "reset"    => "¡Tu contraseña ha sido cambiada!",
 
+    'throttled' => 'Espere antes de volver a intentarlo.',
+
 ];

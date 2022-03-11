@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Hash;
 use Session;
 use App\Models\User;
@@ -13,8 +14,9 @@ use DB;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-
+    // use AuthenticatesUsers;
+    use SendsPasswordResetEmails;
+  
   public function __construct(Request $request)
   {
     $this->middleware('guest', ['except' => 'logout']);
@@ -55,5 +57,8 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
          return response()->json(["sms"=>true,"mensaje"=>"Ingreso Correcto"]);
     }
+
+
+
 
 }

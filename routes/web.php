@@ -24,6 +24,12 @@ Route::get('/home',  function(){
         return view('plantilla', compact('tipo'));
 })->middleware('auth')->name('home');
 
+
+Route::post('password/email', 'LoginController@sendResetLinkEmail')->name('password.email');;
+Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'ResetPasswordController@reset')->name('password.update');
+
+
 Route::post('/ingresar', 'LoginController@ingresar');
 Route::post('/logout', 'LoginController@logout')->middleware('auth');
 Route::get('/recuperar',function(){

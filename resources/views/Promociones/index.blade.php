@@ -67,7 +67,7 @@
                 <div class="form-group row">
                   <label for="precio" class="col-form-label col-sm-3">Precio:</label>
                   <div class="col-sm-8">
-                      <input class="form-control" type="number" placeholder="Precio" name="precio" id="precio" required maxlength="10,2">
+                      <input class="form-control" type="text" placeholder="Precio" name="precio" id="precio" onkeypress="return Limitante(event,this);" required pattern="[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?">
                     <div class="invalid-feedback">Ingrese Precio.</div> 
                   </div>
                 </div>
@@ -84,7 +84,7 @@
 
                 <div id="habilitar_imagen" style="display: none;">             
                   <div class="form-group row">
-                      <label for="nombre" class="col-form-label col-sm-3">Imagen:</label>
+                      <label for="file" class="col-form-label col-sm-3">Imagen:</label>
                       <div class="col-sm-4">
                         <label for="file" class="btn btn-info"> <i class="fas fa-upload"></i></label>
                         <input type="file" name="file" id="file" style='display: none;' accept="image/*" />
@@ -111,7 +111,16 @@
                     </div>
                   </div> 
 
+                 <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">Tiempo de Promo:</label>
+                  <div class="col-sm-8">
+                  <input class="form-control" type="text" name="rango" id="rango" >
+                  </div>
+                  <input class="form-control" type="hidden" name="fecha_ini" id="fecha_ini" value="{{ now()->format('Ymd') }}" >
+ 
 
+                  <input class="form-control" type="hidden"  name="fecha_fin" id="fecha_fin" value="{{ now()->format('Ymd') }}">
+                </div>
               
             </div>
             <div class="modal-footer">
@@ -138,9 +147,64 @@
   @section('script')
   <script type="text/javascript">
 
-    $('#categoria').select2({
-      theme: 'bootstrap4'
+   (function(){
+    function filePreview(input){
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+         reader.onload = function(e){
+          $('#imagePreview').html("<img src='"+e.target.result+"' width='150' heigth='150' >");
+         }
+         reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $('#file').change(function(){
+      filePreview(this);
+   
     })
+  })();
+
+
+$('input[name="rango"]').daterangepicker({
+    drops: 'up',
+    opens: 'right',
+    "locale": {
+      "format": "DD/MM/YYYY",
+      "separator": " - ",
+      "applyLabel": "Aceptar",
+      "cancelLabel": "Cancelar",
+      "fromLabel": "Desde",
+      "toLabel": "Hasta",
+      "customRangeLabel": "Custom",
+      "weekLabel": "S",
+      "daysOfWeek": [
+        "Do",
+        "Lu",
+        "Ma",
+        "Mi",
+        "Ju",
+        "Vi",
+        "Sa"
+      ],
+      "monthNames": [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+      ],
+      "firstDay": 1
+    }
+  }, function(start, end, label) {
+    $('#fecha_ini').val(start.format('YYYYMMDD'));
+    $('#fecha_fin').val(end.format('YYYYMMDD'));
+  });
 
   function consultar_tabla(){  
         $("#contenedor_principal").html("<div style='text-align:center'><img src='{{asset('/dist/img/espera.gif')}}' style='pointer-events:none' width='300'  height='200' /></div>");
@@ -167,7 +231,8 @@
                     },
                 },
                 columnDefs: [
-                  { width: 170, targets: 1 }
+                  { width: 40, targets: 0 },
+                  { width: 80, targets: 1 }
                 ],
                 "responsive": true,
                 columns:data.titulos,
@@ -179,22 +244,6 @@
 
     consultar_tabla();
 
-
-   (function(){
-    function filePreview(input){
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-         reader.onload = function(e){
-          $('#imagePreview').html("<img src='"+e.target.result+"' width='150' heigth='150' >");
-         }
-         reader.readAsDataURL(input.files[0]);
-      }
-    }
-    $('#file').change(function(){
-      filePreview(this);
-   
-    })
-  })();
 
 
 
@@ -234,6 +283,12 @@
      $("#url").val('');
      $("#validar").val('incorrecto');
   }
+
+
+
+
+
+
 
 
 
@@ -327,6 +382,40 @@
             }
       })
     }
+
+
+    function Limitante(evt, input) {
+            var key = window.Event ? evt.which : evt.keyCode;
+            var chark = String.fromCharCode(key);
+            var tempValue = input.value + chark;
+ 
+
+            if (key==46 || (key >= 48 && key <= 57)  ) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {                  
+                    return true;
+                }
+            } else {
+                if (key == 8 || key == 13 || key == 0 || key == 188) {
+                    return true;
+                }  else {
+                    return false;
+                }
+            }
+        }
+
+
+        function filter(_val_) {
+            var regexp = /^[0-9]{1,4}([.]{1}?([0-9]{1,2})?)?$/;
+
+            if (regexp.test(_val_) === true) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
 
   </script>
 

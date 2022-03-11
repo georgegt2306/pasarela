@@ -104,8 +104,10 @@
     })
     $( document ).ready(function() {
         $('#fec3_rango').daterangepicker({
+            drops: 'down',
+            opens: 'right'
             startDate: new Date(), 
-            endDate: new Date(), 
+            endDate: new Date(),
             "locale": {
               "format": "DD/MM/YYYY",
               "separator": " - ",

@@ -53,10 +53,6 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css')}}">
 
-
-<script defer src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
@@ -71,25 +67,35 @@
           <div class="login-logo">
      <a href="#"><img src="{{ asset('/dist/img/LOGO.png')}}" width="100" height="100"></a>
     </div>
-     
+                        @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+     <form method="POST" action="{{ route('password.email') }}">
+     @csrf
         <div class="input-group mb-3">
-          <input type="email" class="form-control" id="email2" placeholder="Email">
+          <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
+                                        @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
         </div>
         
         <div class="row">
-
           <div class="col-md-12" style="display: block !important;margin: 0 !important">
-            
-            <button type="submit" class="btn  btn-block" id="recuperarcontra" onclick="recuperarcon();" > Enviar </button>
+            <button type="submit" class="btn  btn-block" id="recuperarcontra"> Enviar </button>
           
           </div>
           <!-- /.col -->  
         </div>
+      </form>
        <div class="col-md-12" ></br>
           <a href="{{asset('/')}}" id="olvidecon">Regresar</a>
       </div>
@@ -103,13 +109,6 @@
 <script src="{{ asset('/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('/dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('/plugins/sweetalert2.js')}}"></script>
-<script type="text/javascript">
-  
-  function recuperarcon(){
-    
-  }
-
-</script>
 
 </body>
 </html>
