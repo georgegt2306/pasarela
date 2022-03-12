@@ -10,7 +10,7 @@ use Session;
 use App\Models\User;
 use Validator;
 use Auth;
-use DB;
+
 
 class LoginController extends Controller
 {
@@ -27,14 +27,13 @@ class LoginController extends Controller
     public function ingresar(Request $request)
     {
 
-        $result=DB::table('user')
-          ->where([['email', '=', $request->email]])
+        $result=User::where('email', $request->email)
           ->whereNull('deleted_at')
           ->first();
 
-      
+       
         if (is_null($result)) {
-           return response()->json(["sms"=>false,"mensaje"=>"Credenciales invalidas"]);
+          return response()->json(["sms"=>false,"mensaje"=>"Credenciales invalidas"]);
         } else{
               if ($result->id_tipo==1 || $result->id_tipo==2) {
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
