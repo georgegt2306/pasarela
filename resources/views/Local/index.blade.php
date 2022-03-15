@@ -65,7 +65,7 @@
                 <div class="form-group row">
                   <label for="ruc" class="col-form-label col-sm-3">RUC:</label>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc"  onkeypress="return justNumbers(event);" required pattern="[0-9]{10}|[0-9]{13}">
+                    <input class="form-control" type="text" placeholder="RUC" name="ruc" id="ruc"  onkeypress="return justNumbers(event);" required pattern="|[0-9]{13}" maxlength="13">
                      <div class="invalid-feedback">Ingrese RUC.</div> 
                   </div>
                 </div>                

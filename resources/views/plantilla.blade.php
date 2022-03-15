@@ -67,7 +67,7 @@
                     animation: true,
                     background:'white',
                     showCancelButton: true,
-                    confirmButtonColor: '#012D3A',
+                    confirmButtonColor: '#2C5884',
                     cancelButtonColor: '#BB141B',
                     confirmButtonText: 'Si',
                     cancelButtonText: 'Cancelar'

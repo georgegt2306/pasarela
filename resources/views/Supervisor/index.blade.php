@@ -165,6 +165,7 @@
      event.preventDefault();
       if (!form.checkValidity()) {
         event.stopPropagation();
+        form.classList.add('was-validated');
       }else {
         const crear_sup = new FormData(form); 
             $.ajax({
@@ -198,9 +199,11 @@
                       location.reload();
                     }
                 }
-            });   
+            });
+
+             form.classList.remove('was-validated');   
         }
-        form.classList.add('was-validated');
+       
     }, false);
 
 

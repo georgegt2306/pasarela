@@ -1,14 +1,142 @@
 <!DOCTYPE html>
 <html>
 <link rel="icon" href="{{ asset('/dist/img/LOGO.png')}}">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    name="viewport">
 <style type="text/css">
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url("{{asset('/images/fondo.jpg')}}")  center top;
+    background-size: 100% 100%;
+    font-family: sans-serif;
+    height: 10vh;
+
+    }
+  .login-box {
+      background: #fff;     
+      width: 420px;
+      height: 300px;
+      padding: 10px 10px 20px 10px;     
+      opacity: 0.95; 
+      padding: 10px 10px 20px 10px;
+      border-radius:20px ;
+      top: 50%;
+      left: 75%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;  
+  }
+.login-box .avatar {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: -70px;
+  left: calc(50% - 50px);
+}
+
+
+  @media screen and (max-width: 1000px) {
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #3D5C9D !important;
+    background: none;
+
+    background-size: 100% 100%;
+    font-family: sans-serif;
+    height: 10vh;
+
+    }
+      .login-box {
+        background: #fff;
+        border-radius:20px ;
+        width: 400px;
+        height: 300px
+        display: block;
+        border-radius:20px ;
+        top:50%;
+        left: 50%;
+        position: absolute;
+      
+    }
+    .login-box .avatar {
+        display: block;
+        width: 100px;
+        height: 100px;
+        
+        position: absolute;
+        top: -70px;
+        left: calc(50% - 50px);
+      }
+  }
+
+
+
+  .login-box button[name="submit"] {
+  background:#ADD368;
+  border-radius:10px;
+  padding:12px;
+  color: black;
+  font-weight: bold;
+  border-color: white;
+  }
+
+.login-box button[name="submit"]:hover {
+  cursor: pointer;
+  background: #B7EF51;
+  color: black;
+  border-color: white;
+  border-radius:10px;
+ 
+}
+
+
+.login-box button[name="submit"]:after {
+  content: '';
+  width: 0%;
+  height: 2px;
+  display: block;
+  background: white;
+  transition: 0.7s;
+}
+
+.login-box button[name="submit"]:hover:after {
+    background: black;
+    width: 100%;
+    text-decoration: underline;
+}
+
+.login-box a {
+  display: inline-block;
+  color: #5F88CA;
+  transition: all ease-in-out 1s;
+}
+
+.login-box a:after {
+  content: '';
+  width: 0px;
+  height: 1px;
+  display: block;
+  background: black;
+  transition: 1s;
+}
+
+.login-box a:hover:after {
+    width: 100%;
+    text-decoration: underline;
+}
+
+
 
   #olvidecon{
     font-family: 'Roboto'; 
     
   }
   #olvidecon:hover{
-    text-decoration: underline;
+ 
     font-weight: bold;
   }
   
@@ -16,16 +144,15 @@
   #loginmercy{
     font-family: 'Roboto'; 
     
-    background-color: #BB141B;
+    background-color: #2C5884;
     color: white; 
     transition: all ease-in-out 1s; 
   }
 
   #loginmercy:hover{
-   background-color: #CB0810;
+   background-color: #5F88CA;
    border: 2px black solid;
  }
-
 
 #loginmercy:after {
   content: '';
@@ -46,7 +173,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Pasarela Mercy</title>
+  <title>Pasaje Comercial Mercy</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css')}}">
@@ -59,17 +186,12 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
 </head> 
-<body class="hold-transition login-page">
-<div class="login-box">
-  
+<body >
+<div class="login-box" >
+  <img src="{{ asset('/dist/img/LOGO.png')}}"  class="avatar" />
   <!-- /.login-logo -->
-  <div class="card">
+   <div style="padding: 40px">
 
-    <div class="card-body login-card-body" style="border-radius:10% !important ">
-          <div class="login-logo">
-     <a href="#"><img src="{{ asset('/dist/img/LOGO.png')}}" width="100" height="100"></a>
-    </div>
-     
         <div class="input-group mb-3">
           <input type="email" class="form-control" id="email1" placeholder="Email" autocomplete="off">
           <div class="input-group-append">

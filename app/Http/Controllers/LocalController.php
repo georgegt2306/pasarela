@@ -87,7 +87,6 @@ class LocalController extends Controller
               'ruc'=>"required|unique:local,ruc",
             ]);
 
-
         if($v->fails()){
           $mensajedereturn=strtoupper($v->errors()->first('ruc'));
 
