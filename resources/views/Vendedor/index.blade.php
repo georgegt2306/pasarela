@@ -52,13 +52,13 @@
                 <label for="nombre" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-7">
                    <input  class="form-control" type="text" name="nombre" id="nombre" required > 
-                   <div class="invalid-feedback">Ingrese Nombre.</div> 
+                   <div class="invalid-feedback" onkeypress="return soloLetras(event)">Ingrese Nombre.</div> 
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="apellido" class="col-form-label col-sm-3">Apellido:</label>
                     <div class="col-sm-7">
-                     <input class="form-control" type="text" name="apellido" id="apellido" required> <div class="invalid-feedback">Ingrese Apellido.</div> 
+                     <input class="form-control" type="text" name="apellido" id="apellido" required> <div class="invalid-feedback" onkeypress="return soloLetras(event)">Ingrese Apellido.</div> 
                     </div>
                 </div>
                 <div class="form-group row">
