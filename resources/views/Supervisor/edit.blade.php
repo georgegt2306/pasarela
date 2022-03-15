@@ -24,15 +24,16 @@
                 <div class="form-group row">
                 <label for="nombre_edit" class="col-form-label col-sm-3">Nombre:</label>
                   <div class="col-sm-7">
-                   <input  class="form-control" type="text" name="nombre_edit" id="nombre_edit" value="{{$result_edit->nombre}}"  required maxlength="50"> 
-                   <div class="invalid-feedback" onkeypress="return soloLetras(event)">Ingrese Nombre.</div> 
+                   <input  class="form-control" type="text" name="nombre_edit" id="nombre_edit" value="{{$result_edit->nombre}}"  onkeypress="return soloLetras(event)" required maxlength="50"> 
+                   <div class="invalid-feedback" >Ingrese Nombre.</div> 
                   </div>
                 </div>
      
                 <div class="form-group row">
                   <label for="apellido_edit" class="col-form-label col-sm-3">Apellido:</label>
                     <div class="col-sm-7">
-                     <input class="form-control" type="text" value="{{$result_edit->apellido}}" name="apellido_edit" id="apellido_edit" required maxlength="50"> <div class="invalid-feedback" onkeypress="return soloLetras(event)">Ingrese Apellido.</div> 
+                     <input class="form-control" type="text" value="{{$result_edit->apellido}}" name="apellido_edit" id="apellido_edit" onkeypress="return soloLetras(event)" required maxlength="50"> 
+                     <div class="invalid-feedback" >Ingrese Apellido.</div> 
                     </div>
                 </div>
 
@@ -98,26 +99,5 @@
         }
         form2.classList.add('was-validated');
     }, false);
-
-
-  function soloLetras(e) {
-    var key = e.keyCode || e.which,
-      tecla = String.fromCharCode(key).toLowerCase(),
-      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
-      especiales = [8, 37, 39, 46],
-      tecla_especial = false;
-
-    for (var i in especiales) {
-      if (key == especiales[i]) {
-        tecla_especial = true;
-        break;
-      }
-    }
-
-    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
-      return false;
-    }
-  }
-
 
 </script>
