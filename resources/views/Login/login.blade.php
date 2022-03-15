@@ -9,7 +9,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: url("{{asset('/images/fondo.jpg')}}")  center top;
+    background: url("{{asset('dist/img/fondo.jpg')}}")  center top;
     background-size: 100% 100%;
     font-family: sans-serif;
     height: 10vh;
