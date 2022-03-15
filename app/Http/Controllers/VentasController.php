@@ -26,7 +26,7 @@ class VentasController extends Controller
             ->select('user.id as id_vend', 'user.nombre as nombre_vend' , 'user.apellido as apellido_vend')
             ->where('vend_local.id_local', $local_per->id)
             ->whereNull('user.deleted_at')
-            ->orderBy('id')
+            ->orderBy('user.id')
             ->get();
 
         return view('Ventas.index',compact('comboestado', 'combovend'));
