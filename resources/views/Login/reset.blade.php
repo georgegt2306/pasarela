@@ -4,19 +4,136 @@
 <style type="text/css">
 
 
+    body {
+        margin: 0;
+        padding: 0;
+        background: url("{{asset('dist/img/fondo.jpg')}}")  center top;
+        background-size: 100% 100%;
+        font-family: sans-serif;
+        height: 10vh;
+    }
+    .login-box {
+        background: #fff;     
+        width: 400px !important;
+        height: 400px;
+        padding: 10px 10px 20px 10px;     
+        opacity: 0.95; 
+        border-radius:20px ;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;  
+    }
+    .login-box .avatar {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: -70px;
+      left: calc(50% - 50px);
+    }
+
+
+  @media screen and (max-width: 1000px) {
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #3D5C9D !important;
+        background: none;
+
+        background-size: 100% 100%;
+        font-family: sans-serif;
+        height: 10vh;
+    }
+      .login-box {
+        background: #fff;
+        border-radius:20px ;
+        width: 400px;
+        height: 430px;
+        display: block;
+        border-radius:20px ;
+        top:50%;
+        left: 50%;
+        position: absolute;
+      
+    }
+    .login-box .avatar {
+        display: block;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        top: -70px;
+        left: calc(50% - 50px);
+    }
+  }
+
+
+
+    .login-box button[name="submit"] {
+      background:#ADD368;
+      border-radius:10px;
+      padding:12px;
+      color: black;
+      font-weight: bold;
+      border-color: white;
+    }
+
+    .login-box button[name="submit"]:hover {
+      cursor: pointer;
+      background: #B7EF51;
+      color: black;
+      border-color: white;
+      border-radius:10px;
+    }
+
+    .login-box button[name="submit"]:after {
+      content: '';
+      width: 0%;
+      height: 2px;
+      display: block;
+      background: white;
+      transition: 0.7s;
+    }
+
+    .login-box button[name="submit"]:hover:after {
+        background: black;
+        width: 100%;
+        text-decoration: underline;
+    }
+
+.login-box a {
+  display: inline-block;
+  color: #5F88CA;
+  transition: all ease-in-out 1s;
+}
+
+.login-box a:after {
+  content: '';
+  width: 0px;
+  height: 1px;
+  display: block;
+  background: black;
+  transition: 1s;
+}
+
+.login-box a:hover:after {
+    width: 100%;
+    text-decoration: underline;
+}
+
+
   #newcontra{
     font-family: 'Roboto'; 
     font-weight: bold;
-    background-color: #BB141B;
+    background-color: #2C5884;
     color: white; 
     transition: all ease-in-out 1s; 
   }
 
   #newcontra:hover{
-   background-color: #CB0810;
+   background-color: #5F88CA;
    border: 2px black solid;
  }
-
 
 #newcontra:after {
   content: '';
@@ -32,6 +149,12 @@
     background: white;
     text-decoration: underline;
 }
+
+#titulo_h5{
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #415B6F;  
+}
 </style>
 <head>
   <meta charset="utf-8">
@@ -43,77 +166,61 @@
   <link href="{{ asset('/plugins/ionicons.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css')}}">
-
-  <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
 </head> 
 
-<body class="hold-transition login-page">
- <main class="py-4">
+<body >
+<div class="login-box" >
+    <img src="{{ asset('/dist/img/LOGO.png')}}" class="avatar">   
+        <div style="padding: 40px">
+            <h5 id="titulo_h5">RECUPERAR CONTRASEÑA</h5>
+            <form method="POST" action="{{ route('password.update') }}">
+                @csrf
 
+                <div class="row mb-3">
+                    <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
 
-            <div class="card">
+                    <div class="col-md-8">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
-                
-
-               
-
-                <div class="card-body">
-                                        <div class="login-logo">
-                        <a href="#"><img src="{{ asset('/dist/img/LOGO.png')}}" width="100" height="100"></a>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
-
-                            <div class="col-md-8">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">Contraseña</label>
-
-                            <div class="col-md-8">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Confirmar Contraseña</label>
-
-                            <div class="col-md-8">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12" >
-                                <button type="submit" class="btn btn-block" id="newcontra">
-                                    Enviar
-                                </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
 
-</main>
+                <div class="row mb-3">
+                    <label for="password" class="col-md-4 col-form-label text-md-end">Contraseña</label>
+
+                    <div class="col-md-8">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Confirmar Contraseña</label>
+
+                    <div class="col-md-8">
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                    </div>
+                </div>
+
+                <div class="col-md-12" >
+                        <button type="submit" class="btn btn-block" id="newcontra">
+                            Enviar
+                        </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
 <script src="{{ asset('/plugins/jquery/jquery.min.js')}}"></script>
