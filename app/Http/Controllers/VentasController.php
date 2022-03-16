@@ -42,10 +42,8 @@ class VentasController extends Controller
 
         $sQuery="SELECT * from ventas where id_local='".$local_per->id."' and deleted_at is null";
 
-    
-
         if (strcmp($checked,'false')==0){ 
-            $sQuery.=" and fecha between  '".date("Y-m-d", strtotime($fec1))."' and '".date("Y-m-d", strtotime($fec2))."'"; 
+            $sQuery.=" and fecha between  '".date("d/m/Y", strtotime($fec1))."' and '".date("d/m/Y", strtotime($fec2))."'"; 
         }
         if(strcmp($vendedor,'S')!=0){
                 $sQuery.=" and  id_vendedor = '".$vendedor."' "; 

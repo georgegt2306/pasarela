@@ -264,6 +264,12 @@ body {
   } 
 
 
+  document.body.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      ingresar();
+    }
+  });
+
   function ingresar(){
      var email1 = document.getElementById('email1').value;
      var password1 = document.getElementById('password1').value;

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use App\Models\User;
+use App\Models\Local;
 use Validator;
 use Input;
 
@@ -121,7 +122,16 @@ class SupervisorController extends Controller
      
    }
    public function destroy($id){
-      $userid = \Auth::id();
+        $userid = \Auth::id();
+
+        $localasignado= Local::where("id_supervisor", $id)
+                ->whereNull('deleted_at')
+                ->count();
+
+         if($localasignado>0){
+            return response()->json(["sms"=>false ,"mensaje" => "Este Supervisor tiene un local asignado"]);
+         }  
+
       try 
           {
           DB::beginTransaction();

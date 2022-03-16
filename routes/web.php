@@ -25,7 +25,7 @@ Route::get('/home',  function(){
 })->middleware('auth')->name('home');
 
 
-Route::post('password/email', 'LoginController@sendResetLinkEmail')->name('password.email');;
+Route::post('password/email', 'LoginController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'ResetPasswordController@reset')->name('password.update');
 

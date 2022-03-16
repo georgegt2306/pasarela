@@ -238,7 +238,7 @@
               }else{
                  Swal.fire({
                   closeOnClickOutside:false,
-                  title: "Error al Eliminar",
+                  title: res.mensaje,
                   icon: "error",
                   confirmButtonColor: '#3085d6',
                   confirmButtonText: 'OK',
