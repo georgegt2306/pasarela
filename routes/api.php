@@ -22,4 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
-// Route::post('reset-password', [NewPasswordController::class, 'reset']);
+
