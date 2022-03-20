@@ -11,7 +11,7 @@
     <table style="border: 0;margin-bottom:15px">
         <tr>
 	        <td valign="top" style="width: 95%"><h1 style="margin: 0">Reporte</h1></td> 
-	        <td valign="bottom" style=" margin: 0"><img  src="{{ asset('/dist/img/logo.png')}}"  width="100" height="50"  style="margin:0" /></td>
+	        <td valign="bottom" style=" margin: 0"><img  src="{{ asset('/dist/img/LOGO.png')}}"  width="100" height="50"  style="margin:0" /></td>
         </tr>
     </table>
 
