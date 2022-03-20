@@ -61,7 +61,7 @@
            </div>
         </div>
       </div> 
-   <button class="btn btn-primary" style="margin-bottom: 10px;"> Imprimir </button>
+        <button class="btn btn-primary" style="margin-bottom: 10px;" onclick="Imprimir('{{$id}}')"> Imprimir </button>
         <table id="det_venta" class="table display responsive table-bordered table-striped" style="width:100%">
             <thead>
               <tr>
@@ -119,4 +119,8 @@
                       "responsive": true
                   });
        });
+
+    function Imprimir(id){
+      window.open("{{asset('')}}ventas/imprimir/"+id);
+    }
  </script>   

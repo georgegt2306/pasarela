@@ -85,7 +85,9 @@ class VentasController extends Controller
    
          $button= $boton_cons.''.$boton_up.''.$boton_elim;
 
-         $jsonenvtemp = ['',$button,$val_estado,$res->fecha,$res->ci_ruc_cliente,$res->nombre_cliente.' '.$res->apellido_cliente, $res->nombre_vendedor.' '.$res->apellido_vendedor];
+         $imagen='<img src="'.asset('images/ventas.png').'" width="50" height="50"  >';
+
+         $jsonenvtemp = [$imagen,$button,$val_estado,$res->fecha,$res->ci_ruc_cliente,$res->nombre_cliente.' '.$res->apellido_cliente, $res->nombre_vendedor.' '.$res->apellido_vendedor];
 
           array_push($jsonenv, $jsonenvtemp);
         }
@@ -99,8 +101,24 @@ class VentasController extends Controller
 
        $cab_venta=Ventas::where('id', $id)->first();
 
-       return view("Ventas.consultar", compact('det_venta','cab_venta'));
+       return view("Ventas.consultar", compact('det_venta','cab_venta','id'));
     }
+
+    public function imprimir($id){
+
+       $det_venta=Detalle_venta::where('id_venta', $id)->get();
+
+       $cab_venta=Ventas::where('id', $id)->first();
+        $invoice = "Reporte";
+        $view =  \View::make('Ventas.imprimir', compact( 'det_venta','cab_venta','id'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper('mediaA4', 'portrait');
+        $pdf->loadHTML($view);
+          
+         return $pdf->stream('invoice');  
+
+    }
+
     public function edit($id){
         $comboestado_edit=Estado::select('id','nombre')->get();
         $result_edit=Ventas::where('id',$id)->select('id','id_estado','fecha')->first();      

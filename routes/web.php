@@ -25,6 +25,11 @@ Route::get('/home',  function(){
 })->middleware('auth')->name('home');
 
 
+
+Route::get('/exitoso', function(){
+	return view('Cambio');
+})->name('/exitoso');
+
 Route::post('password/email', 'LoginController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'ResetPasswordController@reset')->name('password.update');
@@ -58,3 +63,4 @@ Route::get('promociones/consultar','PromocionesController@consulta_data')->middl
 Route::resource('/ventas','VentasController')->except('show')->middleware('sup.admin');
 Route::get('ventas/consultar/{vendedor}/{estado}/{fec1}/{fec2}/{checked}','VentasController@consulta_data')->middleware('sup.admin');
 Route::get('ventas/info/{id}','VentasController@consultar')->middleware('sup.admin');
+Route::get('ventas/imprimir/{id}','VentasController@imprimir')->middleware('sup.admin');

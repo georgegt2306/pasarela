@@ -1,6 +1,6 @@
 @extends('plantilla')
 @section('content')
-
+<section class="content" style="margin-top: 15px;">
 <div class="row">
     <div class="col-md-12">
      <div class="card">
@@ -78,7 +78,7 @@
 </div>
 </div>
 
-
+</section>
       <div class="modal fade" id="modale_cons" tabindex="-1" role="dialog" aria-labelledby="modalconsTitle" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content" id="vistamodal_cons">               
@@ -185,6 +185,16 @@
             $.get("{{asset('')}}ventas/consultar/"+vendedor+"/"+estado+"/"+fec1+"/"+fec2+"/"+checked).then((data)=> {
                 $('#contenedor_principal').html(qw);
                 $("#Ventas").DataTable({
+                                   "dom": "<'row'<'col-md-4'B><'col-md-4'i><'col-md-4'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                   buttons: [ 
+                      { extend: 'excel', footer: true, title: 'exportar', text:"<img src='{{asset('/dist/img/exportar.png')}}' width='30' height='30'/>",       exportOptions: {
+                          columns: [2,3,4,5,6]
+                        }
+                      },     
+
+                   ],
                     "language": {
                         "lengthMenu": "Mostrar _MENU_ Registros",
                         "zeroRecords": "No hay registros...",
@@ -203,6 +213,7 @@
                       { width: 40, targets: 0 },
                       { width: 130, targets: 1 }
                     ],
+
                     "responsive": true,
                     columns:data.titulos,
                     data:data.sms
