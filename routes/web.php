@@ -37,9 +37,10 @@ Route::post('password/reset', 'ResetPasswordController@reset')->name('password.u
 
 Route::post('/ingresar', 'LoginController@ingresar');
 Route::post('/logout', 'LoginController@logout')->middleware('auth');
+
 Route::get('/recuperar',function(){
 	return view('Login.recuperar');
-});
+})->middleware('guest');
 
 
 Route::get('/register', 'LoginController@registration');
