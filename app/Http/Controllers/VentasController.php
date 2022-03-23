@@ -65,7 +65,7 @@ class VentasController extends Controller
         $titulos[] = array('title' => 'Vendedor');
 
 
-      $jsonenv=[];
+        $jsonenv=[];
       
         foreach ($result as $res) {
 
@@ -87,7 +87,7 @@ class VentasController extends Controller
 
          $imagen='<img src="'.asset('images/ventas.png').'" width="50" height="50"  >';
 
-         $jsonenvtemp = [$imagen,$button,$val_estado,$res->fecha,$res->ci_ruc_cliente,$res->nombre_cliente.' '.$res->apellido_cliente, $res->nombre_vendedor.' '.$res->apellido_vendedor];
+         $jsonenvtemp = [$imagen,$button,$val_estado,$res->created_at,$res->ci_ruc_cliente,$res->nombre_cliente.' '.$res->apellido_cliente, $res->nombre_vendedor.' '.$res->apellido_vendedor];
 
           array_push($jsonenv, $jsonenvtemp);
         }
@@ -115,7 +115,7 @@ class VentasController extends Controller
         $pdf->setPaper('mediaA4', 'portrait');
         $pdf->loadHTML($view);
           
-         return $pdf->stream('invoice');  
+        return $pdf->stream('Reporte_de_gestion');  
 
     }
 
