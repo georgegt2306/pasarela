@@ -47,10 +47,10 @@ class PromocionesController extends Controller
     
          $boton_elim=' <button title="eliminar" class="btn btn-danger" name="eliminar" onclick="elim('.$res->id.');"><i class="fa fa-trash"></i> </button>';
 
-         $error="'".asset('images/promocion.png')."'";
+    
 
          $time = date("H:i:s");
-         $imagen='<img src="'.$res->url_imagen.'?time='.$time.'" width="50" height="50" onerror="this.src='.$error.'" >';
+         $imagen='<img src="'.$res->url_imagen.'?time='.$time.'" width="50" height="50"  >';
          $button= $boton_up.''.$boton_elim;
 
          $jsonenvtemp = [$imagen,$button,$res->nombre,$res->precio,$res->fecha_ini,$res->fecha_fin];
@@ -79,7 +79,8 @@ class PromocionesController extends Controller
               'fecha_fin'=>$request->fecha_fin,
               'url_imagen'=>'',
               'id_local' => $local_per->id,
-              'user_updated' => $userid
+              'user_updated' => $userid,
+              'created_at'=> now()
 
             ]);
             
@@ -95,7 +96,7 @@ class PromocionesController extends Controller
             }
 
             Promocion::where('id', $id)
-              ->update(['url_imagen' => $path==null?'':$path]);
+              ->update(['url_imagen' => $path==null?'https://pasarelamercy.online/images/promocion.png':$path]);
 
 
             DB::commit();

@@ -66,10 +66,10 @@ class LocalController extends Controller
          $boton_elim=' <button title="eliminar" class="btn btn-danger" name="eliminar" onclick="elim('.$res->id.');"><i class="fa fa-trash"></i> </button>';
 
 
-         $error="'".asset('images/local.png')."'";
+        
 
          $time = date("H:i:s");
-         $imagen='<img src="'.$res->url_image.'?time='.$time.'" width="50" height="50" onerror="this.src='.$error.'" >';
+         $imagen='<img src="'.$res->url_image.'?time='.$time.'" width="50" height="50" >';
    
          $button= $boton_up.''.$boton_elim;
 
@@ -133,7 +133,7 @@ class LocalController extends Controller
             }
 
             Local::where('id', $id)
-              ->update(['url_image' => $path==null?'':$path]);
+              ->update(['url_image' => $path==null?'https://pasarelamercy.online/images/local.png':$path]);
 
 
             DB::commit();

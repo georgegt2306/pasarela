@@ -65,13 +65,7 @@ class SupervisorController extends Controller
          $mensajedereturn=strtoupper($v->errors()->first('email'));
          return response()->json(["sms"=>false ,"mensaje" => $mensajedereturn]);     
       }
-      // $validator=User::where([['email','=',$request->email_sup],['id_tipo','=','2']])
-      //    ->whereNull('deleted_at')
-      //    ->count();
-
-      // if($validator==1){
-      //    return response()->json(["sms"=>false,"mensaje"=>"Email ya existe"]);
-      // }
+ 
 
       try {
          DB::beginTransaction();

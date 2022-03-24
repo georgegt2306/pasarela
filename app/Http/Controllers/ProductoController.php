@@ -108,7 +108,7 @@ class ProductoController extends Controller
             }
 
             Producto::where('id', $id)
-              ->update(['url_imagen' => $path==null?'':$path]);
+              ->update(['url_imagen' => $path==null?'https://pasarelamercy.online/images/producto.png':$path]);
 
 
             DB::commit();
