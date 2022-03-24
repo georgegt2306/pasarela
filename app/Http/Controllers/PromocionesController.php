@@ -144,7 +144,7 @@ class PromocionesController extends Controller
               'fecha_ini'=>$request->fecha_ini_edit,
               'fecha_fin'=>$request->fecha_fin_edit,
               'precio'=>$request->precio_edit,
-              'url_imagen' =>$path==null?'':$path,
+              'url_imagen' =>$path==null?'https://pasarelamercy.online/images/promocion.png':$path,
               'user_updated' => $userid]);
 
             DB::commit();

@@ -215,7 +215,7 @@ class LocalController extends Controller
                     'descripcion'=>$request->descripcion_edit,
                     'latitud'=>$request->latitud_edit,
                     'longitud'=>$request->longitud_edit,
-                    'url_image' =>$path==null?'':$path,
+                    'url_image' =>$path==null?'https://pasarelamercy.online/images/local.png':$path,
                     'id_admin' => $userid,
                     'user_updated' => $userid]);
 

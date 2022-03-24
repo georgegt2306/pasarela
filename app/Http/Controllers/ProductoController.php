@@ -167,7 +167,7 @@ class ProductoController extends Controller
               'existencia'=>$request->existencia_edit,
               'descuento'=>$request->descuento_edit,
               'tasa_iva'=>$request->iva_edit,
-              'url_imagen' =>$path==null?'':$path,
+              'url_imagen' =>$path==null?'https://pasarelamercy.online/images/producto.png':$path,
               'user_updated' => $userid]);
 
             DB::commit();
