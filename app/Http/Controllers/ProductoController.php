@@ -16,6 +16,7 @@ class ProductoController extends Controller
     public function index(){
 
         $categoria= Categoria::select('id','nombre')
+                ->where('id_parent','>','1')
                 ->whereNull('deleted_at')->get();
 
 
