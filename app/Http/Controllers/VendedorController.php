@@ -95,15 +95,8 @@ class VendedorController extends Controller
                         'direccion' => $request->direccion,
                         'user_updated' => $userid,
                      ]);
-
-         Vend_local::create([
-            'id_local' => $local_per->id,
-            'id_vendedor' => $id_vendedor,
-            'user_updated' => $userid
-         ]);
-         DB::commit();
-         
-         return response()->json(["sms"=>true, "mensaje"=>"Se creo correctamente"]);
+         var_dump($id_vendedor);
+     
 
       }catch(\Exception $e){
          DB::rollBack();
