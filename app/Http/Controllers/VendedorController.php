@@ -93,6 +93,8 @@ class VendedorController extends Controller
                         'email' => $request->email,
                         'password' => Hash::make($request->contra),
                         'direccion' => $request->direccion,
+                        'updated_at' =>now(),
+                        'created_at' =>now(),
                         'user_updated' => $userid
                      ]);
 
