@@ -85,7 +85,7 @@ class VendedorController extends Controller
       try {
          DB::beginTransaction();
             
-         $id_vendedor=User::insertGet([
+         $id_vendedor=User::insertGetId([
                         'id_tipo' => '3',
                         'ci_ruc' => $request->ci_ruc,
                         'nombre' => $request->nombre,
