@@ -24,4 +24,6 @@ class Producto extends Model
         'tasa_iva',
         'user_updated',
     ];
+
+    public $timestamps = false;
 }

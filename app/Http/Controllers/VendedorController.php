@@ -85,7 +85,7 @@ class VendedorController extends Controller
       try {
          DB::beginTransaction();
             
-         $id_vendedor=User::create([
+         $id_vendedor=User::insertGet([
                         'id_tipo' => '3',
                         'ci_ruc' => $request->ci_ruc,
                         'nombre' => $request->nombre,
@@ -93,10 +93,17 @@ class VendedorController extends Controller
                         'email' => $request->email,
                         'password' => Hash::make($request->contra),
                         'direccion' => $request->direccion,
-                        'user_updated' => $userid,
+                        'user_updated' => $userid
                      ]);
-         var_dump($id_vendedor);
-     
+
+         Vend_local::create([
+            'id_local' => $local_per->id,
+            'id_vendedor' => $id_vendedor,
+            'user_updated' => $userid
+         ]);
+         DB::commit();
+         
+         return response()->json(["sms"=>true, "mensaje"=>"Se creo correctamente"]);
 
       }catch(\Exception $e){
          DB::rollBack();
