@@ -49,7 +49,7 @@ class PromocionesController extends Controller
 
     
 
-         $time = date("H:i:s");
+         
          $imagen='<img src="'.$res->url_imagen.'?time='.$time.'" width="50" height="50"  >';
          $button= $boton_up.''.$boton_elim;
 
