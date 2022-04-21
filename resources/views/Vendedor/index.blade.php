@@ -71,9 +71,17 @@
                 <div class="form-group row">
                   <label for="contra" class="col-form-label col-sm-3">Contraseña:</label>
                     <div class="col-sm-7">
-                     <input class="form-control" type="password" name="contra" id="contra" required minlength="6">  <div class="invalid-feedback">Ingrese Contraseña, minimo 6 caracteres.</div> 
+                      <div class="input-group mb-3">
+                      <input class="form-control" type="password" name="contra" id="contra" required minlength="6">    
+                        <div class="input-group-append">
+                          <div class="input-group-text"  onclick="mostrarPassword();">
+                            <span class="fa fa-eye-slash icon"></span>
+                          </div>
+                        </div> 
+                      </div> 
                     </div>
-                </div>                
+                    <div class="invalid-feedback">Ingrese Contraseña, minimo 6 caracteres.</div> 
+                </div>
                 <div class="form-group row">
                   <label for="direccion" class="col-form-label col-sm-3">Dirección:</label>
                   <div class="col-sm-7">
@@ -232,6 +240,17 @@
         })
   }
 
+
+  function mostrarPassword(){
+    var cambio = document.getElementById("contra");
+    if(cambio.type == "password"){
+      cambio.type = "text";
+      $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    }else{
+      cambio.type = "password";
+      $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+  } 
 
 
   </script>
