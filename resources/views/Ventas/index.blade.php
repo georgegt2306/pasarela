@@ -189,7 +189,7 @@
                     "<'row'<'col-md-12'tr>>" +
                     "<'row'<'col-md-5'i><'col-md-7'p>>",
                    buttons: [ 
-                      { extend: 'excel', footer: true, title: 'exportar', text:"<img src='{{asset('/dist/img/exportar.png')}}' width='30' height='30'/>",       exportOptions: {
+                      { extend: 'excel', footer: true, title: 'Gestion_pedidos', text:"<img src='{{asset('/dist/img/exportar.png')}}' width='30' height='30'/>",       exportOptions: {
                           columns: [2,3,4,5,6]
                         }
                       },     
