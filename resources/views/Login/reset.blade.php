@@ -190,13 +190,20 @@
                         @enderror
                     </div>
                 </div>
+      
 
                 <div class="row mb-3">
                     <label for="password" class="col-md-4 col-form-label text-md-end">Contraseña</label>
 
                     <div class="col-md-8">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                      <div class="input-group mb-3">
+                      <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">   
+                        <div class="input-group-append">
+                          <div class="input-group-text"  onclick="mostrarPassword();">
+                            <span class="fa fa-eye-slash icon"></span>
+                          </div>
+                        </div> 
+                      </div> 
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -209,7 +216,15 @@
                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Confirmar Contraseña</label>
 
                     <div class="col-md-8">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                       <div class="input-group mb-3">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">  
+                        <div class="input-group-append">
+                          <div class="input-group-text"  onclick="mostrarPassword2();">
+                            <span class="fa fa-eye-slash icon2"></span>
+                          </div>
+                        </div> 
+                      </div> 
+ 
                     </div>
                 </div>
 
@@ -226,4 +241,28 @@
 <script src="{{ asset('/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('/dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('/plugins/sweetalert2.js')}}"></script>
+<script>
+function mostrarPassword(){
+    var cambio = document.getElementById("password");
+    if(cambio.type == "password"){
+      cambio.type = "text";
+      $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    }else{
+      cambio.type = "password";
+      $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+  } 
+
+  function mostrarPassword2(){
+    var cambio2 = document.getElementById("password-confirm");
+    if(cambio2.type == "password"){
+      cambio2.type = "text";
+      $('.icon2').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    }else{
+      cambio2.type = "password";
+      $('.icon2').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+  } 
+</script>
+
 </body>
